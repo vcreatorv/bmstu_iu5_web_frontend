@@ -7,7 +7,7 @@ export interface IProviderService {
     price: number;
     unit: string;
     amount_description: string;
-    imgUrl: string; 
+    img_url: string; 
 }
 
 export interface IGetProviderServiceListResponse {
@@ -23,7 +23,7 @@ export interface IProviderServiceDataInRequestItem {
     monthly_payment: boolean;
     unit: string;
     amount_description: string;
-    imgUrl: string; 
+    img_url: string; 
 }
 
 export interface IProviderServiceInRequestItem {
