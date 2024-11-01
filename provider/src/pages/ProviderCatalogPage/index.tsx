@@ -4,7 +4,7 @@ import { Cart } from '../../components/Cart'
 import { ProviderServiceProps } from '../../components/ProviderServiceCard/typing'
 import { ProviderServiceCard } from '../../components/ProviderServiceCard';
 
-export default function ResponsiveCards() {
+export default function ProviderCatalogPage() {
   const cards = [
     { 
         id: 1, 
