@@ -1,30 +1,43 @@
 import { FC } from "react";
-import { ProviderServiceProps } from "./typing";
+import { IProviderServiceProps } from "./typing";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 
-export const ProviderServiceCard: FC<ProviderServiceProps>= (providerService: ProviderServiceProps) => {
+export const ProviderServiceCard: FC<IProviderServiceProps>= (providerService: IProviderServiceProps) => {
+    
+    const renderPrice = () => {
+        if (providerService.monthlyPayment) {
+          return `от ${providerService.price} ₽/мес`;
+        } else {
+          return `от ${providerService.price} ₽ за ${providerService.unit}`;
+        }
+    };
+      
     return (
         <Card className="w-100 rounded-4 shadow-sm">
-            <Card.Img variant="top" src={"/src/" + providerService.id + ".png"} style={{ height: '300px', objectFit: 'contain' }} />
+            <Card.Img variant="top" src={providerService.imgUrl} style={{ height: '300px', objectFit: 'contain' }} />
             <Card.Body className="d-flex flex-column">
             <Card.Title>{providerService.title}</Card.Title>
-            <Card.Text className="fw-medium">${providerService.price} в месяц</Card.Text>
+            <Card.Text className="fw-medium fs-5">{renderPrice()}</Card.Text>
             <div className="mt-auto d-flex justify-content-between">
                 <Button variant="warning" className="w-100 btn-lg me-2"
-                style={{ transition: "transform 550ms" }}
+                style={{ transition: "transform 550ms", backgroundColor: "#fed305", borderColor: "#fed305", fontWeight: "500", color: "#373737"}}
                 onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
-                >Купить</Button>
+                >Добавить</Button>
                 
-                <Button variant="secondary" className="w-100 btn-lg"
-                style={{ transition: "transform 550ms" }}
+                <Link 
+                className="btn btn-secondary w-100 btn-lg"
+                style={{ transition: "transform 550ms", backgroundColor: "#adadad", borderColor: "#adadad", fontWeight: "500", color: "#373737"}}
                 onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
-                >Подробнее</Button>
+                to={'/duties/' + providerService.id}
+                >
+                Подробнее
+                </Link>
             </div>
             </Card.Body>
         </Card>
     );
-
 }

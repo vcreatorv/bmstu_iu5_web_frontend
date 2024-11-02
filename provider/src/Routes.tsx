@@ -1,6 +1,6 @@
 import {RouteObject, useRoutes} from "react-router-dom";
 import { PrivatePages } from "./PrivatePages";
-import ProviderCatalogPage from "./pages/ProviderCatalogPage";
+import { ProviderCatalogPage } from "./pages/ProviderCatalogPage";
 import { MainPage } from "./pages/MainPage";
 import { ProviderServicePage } from "./pages/ProviderServicePage";
 

@@ -1,7 +1,8 @@
-import React from "react";
 import { Container } from "react-bootstrap";
+import { ICartProps } from "./typing";
+import { FC } from "react";
 
-export const Cart: React.FC = () => {
+export const Cart: FC<ICartProps> = (cartData: ICartProps) => {
   return (
     <Container className="m-0 mb-5 mt-5 border border-2 shadow-sm rounded p-2 align-self-end"
       style={{ width: "150px", height: "95px", transition: "transform 550ms", backgroundColor: "#ffffff"}}
@@ -15,7 +16,7 @@ export const Cart: React.FC = () => {
           className="mb-2" 
           style={{ width: "40px" }}
         />
-        <p className="m-0"><small>Выбрано услуг: 0</small></p>
+        <p className="m-0"><small>Выбрано услуг: {cartData.itemsInCart}</small></p>
       </a>
     </Container>
   );
