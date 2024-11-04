@@ -32,7 +32,7 @@ export const ProviderServiceCard: FC<IProviderServiceProps>= (providerService: I
                 style={{ transition: "transform 550ms", backgroundColor: "#adadad", borderColor: "#adadad", fontWeight: "500", color: "#373737"}}
                 onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
-                to={'/duties/' + providerService.id}
+                to={'/provider-duties/' + providerService.id}
                 >
                 Подробнее
                 </Link>

@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 export const Navbar: FC = () => {
     return (
       <NavbarComp className="logo-container border-bottom border-secondary border-2" style={{ backgroundColor: "#fed305" }} sticky='top'>
-          <NavbarComp.Brand className="d-flex align-items-center ms-3">
-            <Link to="/duties">
+          <NavbarComp.Brand className="d-flex align-items-center ms-3 flex-row">
+            <Link to="/">
               <img
                 src="/src/logo.png"
                 alt="Logo"
@@ -15,6 +15,9 @@ export const Navbar: FC = () => {
                 style={{ maxHeight: '50px' }}
               />
             </Link>
+            <Link to="/provider-duties" className="ms-5 fs-4 text-decoration-none text-dark" style={{ fontWeight: 600 }}>
+              Каталог услуг
+            </Link> 
           </NavbarComp.Brand>
       </NavbarComp>
     );

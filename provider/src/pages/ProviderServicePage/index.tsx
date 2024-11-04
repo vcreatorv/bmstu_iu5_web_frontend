@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { IProviderService } from "../../core/api/service/typing";
 import { getProviderServiceById } from "../../core/api/service";
 import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK} from "../../core/mock/porivderServicesList";
+import { Breadcrumbs } from "../../components/BreadCrumbs";
 
 export const ProviderServicePage: FC = () => {
     // const provider_service = { 
@@ -56,6 +57,18 @@ export const ProviderServicePage: FC = () => {
     return (
         <>
             <Navbar/>
+            <Container className="mt-4 ms-3">
+                <Breadcrumbs
+                        middleItems={[
+                            {
+                                name: "Каталог",
+                                link: "/provider-duties"
+                            }
+                        ]}
+                        endItem={providerServiceData.title}
+                />
+            </Container>
+            
             <Container fluid className="mt-5 pb-4 d-flex flex-column align-items-center mx-auto" >
                 <Card className="col-5 rounded-4 shadow-sm">
                     <Card.Img variant="top" src={providerServiceData.imgUrl} style={{ height: '300px', objectFit: 'contain' }} />

@@ -5,6 +5,7 @@ import { ProviderServiceCard } from '../../components/ProviderServiceCard';
 import { useProviderCatalogPage } from './useProviderCatalogPage';
 import { IProviderServiceProps } from '../../components/ProviderServiceCard/typing';
 import { FC } from 'react';
+import { Breadcrumbs } from '../../components/BreadCrumbs';
 
 export const ProviderCatalogPage: FC = () => {
 //   const cards = [
@@ -88,8 +89,12 @@ export const ProviderCatalogPage: FC = () => {
     <>
       <Navbar/>
       {/* <Container fluid className="pb-4 d-flex flex-column w-75 mx-auto"> */}
+      
       <Container className="pb-4 d-flex flex-column mx-auto" style={{maxWidth:'1200px;'}}>
-        <Cart connectionRequestId={connectionRequestId ? connectionRequestId : 0} itemsInCart={itemsInCart} />
+        <Container className="d-flex flex-row justify-content-between mb-5 mt-5">
+          <Breadcrumbs endItem="Каталог"/>
+          <Cart connectionRequestId={connectionRequestId ? connectionRequestId : 0} itemsInCart={itemsInCart} />
+        </Container>
         <div className="d-flex justify-content-center mb-4">
             <Form className="d-flex col-8">
             <Form.Control
