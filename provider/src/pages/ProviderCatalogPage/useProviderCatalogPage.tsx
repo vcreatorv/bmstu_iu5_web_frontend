@@ -21,12 +21,12 @@ export const useProviderCatalogPage = () => {
             })
             .catch(() => {
                 let filteredProviderService = PROVIDER_SERVICE_LIST_MOCK;
-                if (title) {
+                if (title && monthlyPayment !== undefined) {
                     filteredProviderService = filteredProviderService.filter((providerService) =>
                         providerService.title.toLowerCase().includes(title.toLowerCase())
                     );
                 }
-                if (monthlyPayment !== null) {
+                if (monthlyPayment !== null && monthlyPayment !== undefined) {
                     filteredProviderService = filteredProviderService.filter((providerService) =>
                         providerService.monthlyPayment === monthlyPayment
                     );
