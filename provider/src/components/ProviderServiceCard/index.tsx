@@ -15,8 +15,15 @@ export const ProviderServiceCard: FC<IProviderServiceProps>= (providerService: I
     };
       
     return (
-        <Card className="w-100 rounded-4 shadow-sm">
-            <Card.Img variant="top" src={providerService.imgUrl} style={{ height: '300px', objectFit: 'contain' }} />
+        <Card className="w-100 rounded-4 shadow-sm" style={{ overflow: 'hidden' }}>
+            <Card.Img variant="top" src={providerService.imgUrl} 
+            style={{ 
+                width: '100%', 
+                height: '300px', 
+                objectFit: 'cover'
+            }}   
+            
+            />
             <Card.Body className="d-flex flex-column">
             <Card.Title>{providerService.title}</Card.Title>
             <Card.Text className="fw-medium fs-5">{renderPrice()}</Card.Text>

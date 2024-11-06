@@ -57,9 +57,15 @@ export const ProviderServicePage: FC = () => {
                 />
             </Container>
             
-            <Container fluid className="mt-5 pb-4 d-flex flex-column align-items-center mx-auto" >
-                <Card className="col-5 rounded-4 shadow-sm">
-                    <Card.Img variant="top" src={providerServiceData.imgUrl} style={{ height: '300px', objectFit: 'contain' }} />
+            <Container fluid className="mt-5 pb-4 d-flex flex-column align-items-center mx-auto">
+                <Card className="col-5 rounded-4 shadow-sm"  style={{ overflow: 'hidden' }}>
+                    <Card.Img variant="top" src={providerServiceData.imgUrl} 
+                        style={{ 
+                            width: '100%', 
+                            height: '400px', 
+                            objectFit: 'cover'
+                        }}   
+                    />
                     <Card.Body className="d-flex flex-column">
                         <Card.Title>{providerServiceData.title}</Card.Title>
                         <Card.Text className="fw-medium mb-4" dangerouslySetInnerHTML={{ __html: providerServiceData.description }}></Card.Text>
