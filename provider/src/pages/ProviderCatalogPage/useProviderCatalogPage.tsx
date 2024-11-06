@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IProviderService } from "../../core/api/service/typing";
 import { getProviderServiceList } from "../../core/api/service";
 import { ProviderServiceList as  PROVIDER_SERVICE_LIST_MOCK } from "../../core/mock/porivderServicesList";
@@ -21,7 +21,7 @@ export const useProviderCatalogPage = () => {
             })
             .catch(() => {
                 let filteredProviderService = PROVIDER_SERVICE_LIST_MOCK;
-                if (title && monthlyPayment !== undefined) {
+                if (title && title !== undefined) {
                     filteredProviderService = filteredProviderService.filter((providerService) =>
                         providerService.title.toLowerCase().includes(title.toLowerCase())
                     );
