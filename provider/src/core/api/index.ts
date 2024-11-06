@@ -2,6 +2,7 @@ import { IRequestOptions } from "./typing.ts";
 
 export const BASE_URL = "/api";
 
+
 export const sendRequest = async (options: IRequestOptions) => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 2000);
@@ -25,12 +26,16 @@ export const sendRequest = async (options: IRequestOptions) => {
     };
 
     if (params) {
-        Object.keys(params).forEach((key) => {
-            url = url + "?" + key + "=" + params[key];
+        const searchParams = new URLSearchParams();
+        Object.entries(params).forEach(([key, value]) => {
+            if (value !== undefined) {
+                searchParams.append(key, String(value));
+            }
         });
+        url += `?${searchParams.toString()}`;
     }
 
-    const response = await fetch(url, {...requestOptions, signal : controller.signal}).finally(() => clearTimeout(timeout));
+    const response = await fetch(url, {...requestOptions, signal: controller.signal}).finally(() => clearTimeout(timeout));
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }

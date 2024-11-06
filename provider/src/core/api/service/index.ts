@@ -1,11 +1,12 @@
 import { sendRequest } from "../index.ts";
 import { IConnectionRequestByIdResponse, IGetProviderServiceListResponse, IProviderService } from "./typing";
 
+
 export const getProviderServiceList = async (searchTitle?: string, monthlyPayment?: boolean | null) => {
     try {
-        const params: Record<string, string> = {};
+        const params: {[key: string]: any} = {};
         if (searchTitle !== undefined) params.title = searchTitle;
-        if (monthlyPayment !== undefined) params.monthlyPayment = String(monthlyPayment);
+        if (monthlyPayment !== undefined && monthlyPayment !== null) params.monthlyPayment = monthlyPayment;
 
         const response: IGetProviderServiceListResponse = await sendRequest({
             method: "GET",

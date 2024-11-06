@@ -5,53 +5,6 @@ import { ProviderServiceList as  PROVIDER_SERVICE_LIST_MOCK } from "../../core/m
 import { ChangeEvent } from "../../App.typing";
 
 
-// export const useProviderCatalogPage = () => {
-//     const [providerServiceList, setProviderServiceList] = useState<IProviderService[]>([]);
-//     const [connectionRequestId, setConnectionRequestId] = useState<number>(0);
-//     const [itemsInCart, setItemsInCart] = useState<number>(0);
-//     const [searchProviderServiceTitle, setSearchProviderServiceTitle] = useState("");
-
-//     const handleSearchProviderServiceClick = () => {
-//         getProviderServiceList(searchProviderServiceTitle)
-//             .then((data) => {
-//                 setProviderServiceList(data.providerServiceList);
-//             })
-//             .catch(() => {
-//                 const filteredProviderService = PROVIDER_SERVICE_LIST_MOCK.filter((providerService) =>
-//                     providerService.title.toLowerCase().startsWith(searchProviderServiceTitle.toLowerCase())
-//                 );
-//                 setProviderServiceList(filteredProviderService);
-//             });
-//     };
-
-//     const handleSearchTitleChange = (e: ChangeEvent) => {
-//         setSearchProviderServiceTitle(e.target.value);
-//     };
-
-//     useEffect(() => {
-//         getProviderServiceList()
-//             .then((data) => {
-//                 setProviderServiceList(data.providerServiceList);
-//                 setConnectionRequestId(data.connectionRequestId)
-//                 setItemsInCart(data.itemsInCart)
-//             })
-//             .catch(() => {
-//                 setProviderServiceList(PROVIDER_SERVICE_LIST_MOCK)
-//                 setConnectionRequestId(0)
-//                 setItemsInCart(0)
-//             });
-//     }, []);
-
-//     return {
-//         providerServiceList,
-//         connectionRequestId,
-//         itemsInCart,
-//         handleSearchProviderServiceClick,
-//         handleSearchTitleChange,
-//     };
-// };
-
-
 export const useProviderCatalogPage = () => {
     const [providerServiceList, setProviderServiceList] = useState<IProviderService[]>([]);
     const [connectionRequestId, setConnectionRequestId] = useState<number>(0);
