@@ -8,18 +8,6 @@ import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK} from "../../core/moc
 import { Breadcrumbs } from "../../components/BreadCrumbs";
 
 export const ProviderServicePage: FC = () => {
-    // const provider_service = { 
-    //     id: 1, 
-    //     title: "Облачное видеонаблюдение", 
-    //     imageURL: "/src/1.png", 
-    //     price: 1129, 
-    //     monthlyPayment: true, 
-    //     unit: "шт", 
-    //     amountDescription: "количество камер", 
-    //     description: "Система видеонаблюдения помогает предотвращать преступления, контролировать сотрудников и отслеживать поток посетителей.\n- Хранение записи в облаке до 14 дней\n- Уведомления о движениях и звуках", 
-    //     active: true 
-    // };
-    
     const {id} = useParams();
     const [providerServiceData, setProviderServiceData] = useState<IProviderService | null>(null);
     
