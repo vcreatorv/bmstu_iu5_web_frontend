@@ -21,7 +21,6 @@ export const MainPage: FC = () => {
                 </Container>
             </Container>
         </Container>
-    </>
-    
+        </>
     );
   };
