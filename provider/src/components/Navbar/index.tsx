@@ -9,7 +9,7 @@ export const Navbar: FC = () => {
           <NavbarComp.Brand className="d-flex align-items-center ms-3 flex-row">
             <Link to="/">
               <img
-                src="/src/logo.png"
+                src="./images/logo.png"
                 alt="Logo"
                 className="img-fluid"
                 style={{ maxHeight: '50px' }}

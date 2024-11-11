@@ -11,7 +11,7 @@ export const Cart: FC<ICartProps> = (cartData: ICartProps) => {
     >
       <a href="#" className="d-flex flex-column align-items-center text-dark text-decoration-none fw-medium">
         <img 
-          src="/src/bee.png" 
+          src="./images/bee.png" 
           alt="Bee Icon" 
           className="mb-2" 
           style={{ width: "40px" }}
