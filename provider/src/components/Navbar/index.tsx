@@ -2,6 +2,8 @@ import { FC } from 'react';
 import { Navbar as NavbarComp } from 'react-bootstrap';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
+import logoImage from "/logo.png"
+
 
 export const Navbar: FC = () => {
     return (
@@ -9,7 +11,7 @@ export const Navbar: FC = () => {
           <NavbarComp.Brand className="d-flex align-items-center ms-3 flex-row">
             <Link to="/">
               <img
-                src="./images/logo.png"
+                src={ logoImage }
                 alt="Logo"
                 className="img-fluid"
                 style={{ maxHeight: '50px' }}

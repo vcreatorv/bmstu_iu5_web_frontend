@@ -6,6 +6,8 @@ import { IProviderService } from "../../core/api/service/typing";
 import { getProviderServiceById } from "../../core/api/service";
 import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK} from "../../core/mock/porivderServicesList";
 import { Breadcrumbs } from "../../components/BreadCrumbs";
+import unknownImage from "/images/image_placeholder.jpg"
+
 
 export const ProviderServicePage: FC = () => {
     const {id} = useParams();
@@ -59,7 +61,7 @@ export const ProviderServicePage: FC = () => {
             
             <Container fluid className="mt-5 pb-4 d-flex flex-column align-items-center mx-auto">
                 <Card className="col-5 rounded-4 shadow-sm"  style={{ overflow: 'hidden' }}>
-                    <Card.Img variant="top" src={providerServiceData.imgUrl} 
+                    <Card.Img variant="top" src={providerServiceData.imgUrl ? (providerServiceData.imgUrl) : (unknownImage)}
                         style={{ 
                             width: '100%', 
                             height: '400px', 
@@ -72,7 +74,7 @@ export const ProviderServicePage: FC = () => {
                         <div className="mt-auto d-flex justify-content-between">
                             <Button variant="warning" className=" w-50 btn-lg me-2"
                                 style={{ transition: "transform 550ms", backgroundColor: "#fed305", borderColor: "#fed305" }}
-                                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-4px)"}
                                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
                             >Купить</Button>
                             <Card.Text className="w-50 fw-medium fs-4 text-center align-self-center">{renderPrice()}</Card.Text>

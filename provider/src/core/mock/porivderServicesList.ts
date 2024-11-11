@@ -5,7 +5,7 @@ export const ProviderServiceList: IProviderService[] = [
     { 
         id: 1, 
         title: "Облачное видеонаблюдение", 
-        imgUrl: "./images/image_placeholder.jpg", 
+        imgUrl: "", 
         price: 1129, 
         monthlyPayment: true, 
         unit: "шт", 
@@ -16,7 +16,7 @@ export const ProviderServiceList: IProviderService[] = [
     { 
         id: 2, 
         title: "Виртуальная АТС", 
-        imgUrl: "./images/image_placeholder.jpg", 
+        imgUrl: "", 
         price: 350, 
         monthlyPayment: true, 
         unit: "шт", 
@@ -27,7 +27,7 @@ export const ProviderServiceList: IProviderService[] = [
     { 
         id: 3, 
         title: "Прокладка интернет-кабеля", 
-        imgUrl: "./images/image_placeholder.jpg", 
+        imgUrl: "", 
         price: 500, 
         monthlyPayment: false, 
         unit: "метр", 
@@ -38,7 +38,7 @@ export const ProviderServiceList: IProviderService[] = [
     { 
         id: 4, 
         title: "Подключение статического IP-адреса", 
-        imgUrl: "./images/image_placeholder.jpg", 
+        imgUrl: "", 
         price: 150, 
         monthlyPayment: true, 
         unit: "шт", 
@@ -49,7 +49,7 @@ export const ProviderServiceList: IProviderService[] = [
     { 
         id: 5, 
         title: "Установка и подключение PLC-адаптера", 
-        imgUrl: "./images/image_placeholder.jpg", 
+        imgUrl: "", 
         price: 2899, 
         monthlyPayment: false, 
         unit: "шт", 
@@ -60,7 +60,7 @@ export const ProviderServiceList: IProviderService[] = [
     { 
         id: 6, 
         title: "Аренда двухдиапазонного роутера", 
-        imgUrl: "./images/image_placeholder.jpg", 
+        imgUrl: "", 
         price: 599, 
         monthlyPayment: true, 
         unit: "шт", 
