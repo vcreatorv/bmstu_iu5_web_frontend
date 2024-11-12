@@ -44,16 +44,6 @@ export const ProviderCatalogPage: FC = () => {
                     Поиск
                 </Button>  
             </div>
-            {/* <Dropdown onSelect={handleTariffTypeChange}>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {tariffType === null ? "Тип оплаты" : tariffType ? "Ежемесячный платеж" : "Разовый платеж"}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey="all">Все типы</Dropdown.Item>
-                <Dropdown.Item eventKey="false">Разовый платеж</Dropdown.Item>
-                <Dropdown.Item eventKey="true">Ежемесячный платеж</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown> */}
             <div className="col-12 col-md-auto">
             <Dropdown onSelect={handleTariffTypeChange} className="w-100">
               <Dropdown.Toggle variant="success" id="dropdown-basic" className="w-100">
