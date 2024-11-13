@@ -85,7 +85,7 @@ export const ProviderServicePage: FC = () => {
                   backgroundColor: "#fed305", 
                   borderColor: "#fed305" 
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-4px)"}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
               >
                 Купить

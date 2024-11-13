@@ -13,6 +13,7 @@ export default defineConfig({
             short_name: 'NET4Y',
             description: "App for for connecting the provider's services",
             theme_color: '#ffffff',
+            background_color: '#FED305', 
             icons: [
                 {
                     src: 'pwa-64x64.png',
@@ -28,13 +29,14 @@ export default defineConfig({
                     src: 'pwa-512x512.png',
                     sizes: '512x512',
                     type: 'image/png',
-                    purpose: 'any'
+                    purpose: 'any',
                 },
                 {
                     src: 'maskable-icon-512x512.png',
                     sizes: '512x512',
                     type: 'image/png',
-                    purpose: 'maskable'
+                    purpose: 'maskable',
+                    background_color: '#FED305'
                 }
             ],
           }, 

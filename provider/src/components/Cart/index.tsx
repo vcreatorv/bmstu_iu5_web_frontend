@@ -7,7 +7,7 @@ export const Cart: FC<ICartProps> = (cartData: ICartProps) => {
   return (
     <Container className="m-0 border border-2 shadow-sm rounded p-2 align-self-end"
       style={{ width: "150px", height: "95px", transition: "transform 550ms", backgroundColor: "#ffffff"}}
-      onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-4px)"}
+      onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
       onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
     >
       <a href="#" className="d-flex flex-column align-items-center text-dark text-decoration-none fw-medium">

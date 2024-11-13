@@ -31,14 +31,14 @@ export const ProviderServiceCard: FC<IProviderServiceProps>= (providerService: I
             <div className="mt-auto d-flex justify-content-between">
                 <Button variant="warning" className="w-100 btn-lg me-2"
                 style={{ transition: "transform 550ms", backgroundColor: "#fed305", borderColor: "#fed305", fontWeight: "500", color: "#373737"}}
-                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-4px)"}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
                 >Добавить</Button>
                 
                 <Link 
                 className="btn btn-secondary w-100 btn-lg"
                 style={{ transition: "transform 550ms", backgroundColor: "#adadad", borderColor: "#adadad", fontWeight: "500", color: "#373737"}}
-                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-4px)"}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
                 to={'/provider-duties/' + providerService.id}
                 >
