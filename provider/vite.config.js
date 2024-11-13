@@ -12,29 +12,31 @@ export default defineConfig({
             name: 'Internet Service Provider',
             short_name: 'NET4Y',
             description: "App for for connecting the provider's services",
-            theme_color: '#ffffff',
+            theme_color: '#FED305',
+            background_color: '#FED305', 
             icons: [
                 {
-                    src: 'pwa-64x64.png',
+                    src: 'pwa-64x64.png?v=1',
                     sizes: '64x64',
                     type: 'image/png'
                 },
                 {
-                    src: 'pwa-192x192.png',
+                    src: 'pwa-192x192.png?v=1',
                     sizes: '192x192',
                     type: 'image/png'
                 },
                 {
-                    src: 'pwa-512x512.png',
+                    src: 'pwa-512x512.png?v=1',
                     sizes: '512x512',
                     type: 'image/png',
-                    purpose: 'any'
+                    purpose: 'any',
                 },
                 {
-                    src: 'maskable-icon-512x512.png',
+                    src: 'maskable-icon-512x512.png?v=1',
                     sizes: '512x512',
                     type: 'image/png',
-                    purpose: 'maskable'
+                    purpose: 'maskable',
+                    background_color: '#FED305'
                 }
             ],
           }, 
