@@ -10,7 +10,7 @@ export const Cart: FC<ICartProps> = (cartData: ICartProps) => {
       onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
       onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
     >
-      <a href="#" className="d-flex flex-column align-items-center text-dark text-decoration-none fw-medium">
+      <a href="#" className="d-flex flex-column align-items-center text-dark text-decoration-none fw-medium" style={{ pointerEvents: "none" }}>
         <img 
           src={ cartImage }
           alt="Bee Icon" 
