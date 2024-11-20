@@ -3,23 +3,23 @@ import { AppRoutes } from './Routes';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from './core/store/store';
 import { useEffect } from 'react';
-
-const {invoke} = (window as any).__TAURI__.tauri;
+import { invoke } from "@tauri-apps/api/core";
+import.meta.env.VITE_DEVELOPER_MINDSET;
 
 function App() {
-  useEffect(() => {
-    invoke('tauri', {cmd: 'create'})
-        .then((response: any) => console.log(response))
-        .catch((error: any) => console.log(error));
-    return () => {
-        invoke('tauri', {cmd: 'close'})
-            .then((response: any) => console.log(response))
-            .catch((error: any) => console.log(error));
+  useEffect(()=>{
+    invoke('tauri', {cmd:'create'})
+      .then(() =>{console.log("Tauri launched")})
+      .catch(() =>{console.log("Tauri not launched")})
+    return () =>{
+      invoke('tauri', {cmd:'close'})
+        .then(() =>{console.log("Tauri launched")})
+        .catch(() =>{console.log("Tauri not launched")})
     }
-  }, []);
+  }, [])
   
   return (
-      <BrowserRouter basename='/bmstu_iu5_web_frontend'>
+      <BrowserRouter>
         <Provider store={store}>
           <AppRoutes/>
         </Provider>

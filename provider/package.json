@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
-    "@tauri-apps/api": "^1.5.2",
     "bootstrap": "^5.3.3",
     "gh-pages": "^6.2.0",
     "react": "^18.3.1",
@@ -25,7 +24,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
-    "@tauri-apps/cli": "^1.5.8",
+    "@tauri-apps/api": "^2.1.1",
+    "@tauri-apps/cli": "^2.1.0",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@types/react-router-dom": "^5.3.3",
