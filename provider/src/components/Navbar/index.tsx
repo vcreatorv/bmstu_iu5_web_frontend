@@ -18,7 +18,7 @@ export const Navbar: FC = () => {
               />
             </Link>
             <Link to="/provider-duties" className="ms-5 fs-4 text-decoration-none text-dark" style={{ fontWeight: 600 }}>
-              Каталог услуг
+              Услуги провайдера
             </Link> 
           </NavbarComp.Brand>
       </NavbarComp>
