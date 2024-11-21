@@ -37,7 +37,7 @@ export const RegisterPage: FC = () => {
                 <label htmlFor="password">Пароль</label>
             </Form.Floating>
     
-            <button type="submit" className="fs-5 btn btn-block w-100" style={{ color: "#ffffff", backgroundColor: "#034efc"}}>Войти</button>
+            <button type="submit" className="fs-5 btn btn-block w-100" style={{ color: "#ffffff", backgroundColor: "#210772"}}>Войти</button>
     
           </div> 
         </Container> 

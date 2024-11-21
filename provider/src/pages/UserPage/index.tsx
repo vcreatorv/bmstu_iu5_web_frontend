@@ -36,7 +36,7 @@ export const UserPage: FC = () => {
                     <label htmlFor="password">Пароль</label>
                 </Form.Floating>
         
-                <button type="submit" className="fs-5 btn btn-block w-100" style={{ color: "#ffffff", backgroundColor: "#034efc"}}>Сохранить</button>
+                <button type="submit" className="fs-5 btn btn-block w-100" style={{ color: "#ffffff", backgroundColor: "#210772"}}>Сохранить</button>
             </div> 
         </Container> 
         </>

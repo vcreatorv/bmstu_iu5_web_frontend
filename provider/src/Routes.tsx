@@ -5,6 +5,7 @@ import { ProviderServicePage } from "./pages/ProviderServicePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { UserPage } from "./pages/UserPage";
+import { ConnectionRequestPage } from "./pages/ConnectionRequestPage";
 
 
 export const AppRoutes = () => {
@@ -32,6 +33,10 @@ export const AppRoutes = () => {
         {
             path: "/user",
             element: <UserPage />,
+        },
+        {
+            path: "/connection-request",
+            element: <ConnectionRequestPage />,
         },
     ];
     const routeResult = useRoutes(routes);
