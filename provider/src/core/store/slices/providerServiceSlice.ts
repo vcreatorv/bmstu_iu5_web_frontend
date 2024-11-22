@@ -11,7 +11,7 @@ const initialState: ProviderServiceState = {
 };
 
 const providerServiceSlice = createSlice({
-  name: 'providerService',
+  name: 'providerServiceSlice',
   initialState,
   reducers: {
     setSearchTitle: (state, action: PayloadAction<string>) => {
@@ -23,5 +23,9 @@ const providerServiceSlice = createSlice({
   },
 });
 
-export const { setSearchTitle, setTariffType } = providerServiceSlice.actions;
+export const {
+   setSearchTitle, 
+   setTariffType
+} = providerServiceSlice.actions;
+
 export default providerServiceSlice.reducer;
