@@ -3,28 +3,45 @@ import { Navbar } from "../../components/Navbar";
 import { Button, Card, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { IProviderService } from "../../core/api/service/typing";
-import { getProviderServiceById } from "../../core/api/service";
+// import { getProviderServiceById } from "../../core/api/service";
 import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK} from "../../core/mock/porivderServicesList";
 import { Breadcrumbs } from "../../components/BreadCrumbs";
+import { api } from "../../core/api";
 import unknownImage from "/images/image_placeholder.jpg"
+import { ProviderDuty } from "../../core/api/API";
 
 
 export const ProviderServicePage: FC = () => {
     const {id} = useParams();
-    const [providerServiceData, setProviderServiceData] = useState<IProviderService | null>(null);
+    const [providerServiceData, setProviderServiceData] = useState<ProviderDuty | null>(null);
     
+    // useEffect(() => {
+    //     if (id) {
+    //         getProviderServiceById(id)
+    //             .then((data) => {
+    //                 setProviderServiceData(data);
+    //             })
+    //             .catch(() => {
+    //                 const providerService = PROVIDER_SERVICE_LIST_MOCK.find(
+    //                     (providerService) => providerService.id === Number(id)
+    //                 );
+    //                 setProviderServiceData(providerService || null);
+    //             });
+    //     }
+    // }, [id]);
+
     useEffect(() => {
-        if (id) {
-            getProviderServiceById(id)
-                .then((data) => {
-                    setProviderServiceData(data);
-                })
-                .catch(() => {
-                    const providerService = PROVIDER_SERVICE_LIST_MOCK.find(
-                        (providerService) => providerService.id === Number(id)
-                    );
-                    setProviderServiceData(providerService || null);
-                });
+      if (id) {
+          api.getProviderDutyById(Number(id))
+              .then((response) => {
+                  setProviderServiceData(response.data);
+              })
+              .catch(() => {
+                  const providerService = PROVIDER_SERVICE_LIST_MOCK.find(
+                      (providerService) => providerService.id === Number(id)
+                  );
+                  setProviderServiceData(providerService || null);
+              });
         }
     }, [id]);
 
@@ -74,7 +91,7 @@ export const ProviderServicePage: FC = () => {
             <Card.Title className="h4 mb-3">{providerServiceData.title}</Card.Title>
             <Card.Text 
               className="fw-medium mb-4" 
-              dangerouslySetInnerHTML={{ __html: providerServiceData.description }}
+              dangerouslySetInnerHTML={{ __html: String(providerServiceData.description) }}
             />
             <div className="mt-auto d-flex flex-row gap-3 align-items-center">
               <Button 

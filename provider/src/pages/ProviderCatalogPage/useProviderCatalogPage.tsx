@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { IProviderService } from "../../core/api/service/typing";
-import { getProviderServiceList } from "../../core/api/service";
+// import { getProviderServiceList } from "../../core/api/service";
 import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK } from "../../core/mock/porivderServicesList";
 import { ChangeEvent } from "../../App.typing";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { setSearchTitle, setTariffType } from "../../core/store/slices/providerServiceSlice";
+import { api } from "../../core/api";
+
 
 export const useProviderCatalogPage = () => {
     const dispatch = useAppDispatch();
@@ -13,30 +15,63 @@ export const useProviderCatalogPage = () => {
     const [connectionRequestId, setConnectionRequestId] = useState<number>(0);
     const [itemsInCart, setItemsInCart] = useState<number>(0);
 
-    const fetchProviderServices = (title?: string, monthlyPayment?: boolean | null) => {
-        getProviderServiceList(title, monthlyPayment)
-            .then((data) => {
-                setProviderServiceList(data.providerServiceList);
-                setConnectionRequestId(data.connectionRequestId);
-                setItemsInCart(data.itemsInCart);
-            })
-            .catch(() => {
-                let filteredProviderService = PROVIDER_SERVICE_LIST_MOCK;
-                if (title && title !== undefined) {
-                    filteredProviderService = filteredProviderService.filter((providerService) =>
-                        providerService.title.toLowerCase().includes(title.toLowerCase())
-                    );
-                }
-                if (monthlyPayment !== null && monthlyPayment !== undefined) {
-                    filteredProviderService = filteredProviderService.filter((providerService) =>
-                        providerService.monthlyPayment === monthlyPayment
-                    );
-                }
-                setProviderServiceList(filteredProviderService);
-                setConnectionRequestId(0);
-                setItemsInCart(0);
+    // const fetchProviderServices = (title?: string, monthlyPayment?: boolean | null) => {
+    //     getProviderServiceList(title, monthlyPayment)
+    //         .then((data) => {
+    //             setProviderServiceList(data.providerServiceList);
+    //             setConnectionRequestId(data.connectionRequestId);
+    //             setItemsInCart(data.itemsInCart);
+    //         })
+    //         .catch(() => {
+    //             let filteredProviderService = PROVIDER_SERVICE_LIST_MOCK;
+    //             if (title && title !== undefined) {
+    //                 filteredProviderService = filteredProviderService.filter((providerService) =>
+    //                     providerService.title.toLowerCase().includes(title.toLowerCase())
+    //                 );
+    //             }
+    //             if (monthlyPayment !== null && monthlyPayment !== undefined) {
+    //                 filteredProviderService = filteredProviderService.filter((providerService) =>
+    //                     providerService.monthlyPayment === monthlyPayment
+    //                 );
+    //             }
+    //             setProviderServiceList(filteredProviderService);
+    //             setConnectionRequestId(0);
+    //             setItemsInCart(0);
+    //         });
+    // };
+
+    const fetchProviderServices = async (title?: string, monthlyPayment?: boolean | null) => {
+        try {
+            const response = await api.getAllProviderDuties({
+                title,
+                monthlyPayment: monthlyPayment === null ? undefined : monthlyPayment
             });
+            
+            if (response.data && typeof response.data === 'object') {
+                const data = response.data as Record<string, any>;
+                setProviderServiceList(data.providerServiceList || []);
+                setConnectionRequestId(data.connectionRequestId || 0);
+                setItemsInCart(data.itemsInCart || 0);
+            }
+        } catch (error) {
+            console.error("Error fetching provider services:", error);
+            let filteredProviderService = PROVIDER_SERVICE_LIST_MOCK;
+            if (title && title !== undefined) {
+                filteredProviderService = filteredProviderService.filter((providerService) =>
+                    providerService.title.toLowerCase().includes(title.toLowerCase())
+                );
+            }
+            if (monthlyPayment !== null && monthlyPayment !== undefined) {
+                filteredProviderService = filteredProviderService.filter((providerService) =>
+                    providerService.monthlyPayment === monthlyPayment
+                );
+            }
+            setProviderServiceList(filteredProviderService);
+            setConnectionRequestId(0);
+            setItemsInCart(0);
+        }
     };
+
 
     const handleSearchProviderServiceClick = () => {
         fetchProviderServices(searchTitle, tariffType);

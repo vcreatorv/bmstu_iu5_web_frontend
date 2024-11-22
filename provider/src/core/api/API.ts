@@ -9,52 +9,344 @@
  * ---------------------------------------------------------------
  */
 
+/** Модель пользователя */
 export interface UserDTO {
+  /**
+   * Логин пользователя
+   * @example "user123"
+   */
   login?: string;
+  /**
+   * Пароль пользователя
+   * @example "password123"
+   */
   password?: string;
+  /**
+   * Роль пользователя
+   * @example "BUYER"
+   */
   role?: string;
 }
 
+/** Модель для обновления услуги провайдера */
 export interface UpdateProviderDutyDTO {
-  /** @format int32 */
+  /**
+   * Идентификатор услуги
+   * @format int32
+   * @example 1
+   */
   id?: number;
+  /**
+   * Название услуги
+   * @example "Интернет 100 Мбит/с"
+   */
   title?: string;
+  /**
+   * Описание услуги
+   * @example "Высокоскоростной интернет для дома"
+   */
   description?: string;
-  /** @format int32 */
+  /**
+   * Цена услуги
+   * @format int32
+   * @example 500
+   */
   price?: number;
+  /**
+   * Флаг ежемесячной оплаты
+   * @example true
+   */
   monthlyPayment?: boolean;
+  /**
+   * Единица измерения
+   * @example "Мбит/с"
+   */
   unit?: string;
+  /**
+   * Описание количества
+   * @example "100 Мбит/с"
+   */
   amountDescription?: string;
+  /**
+   * URL изображения услуги
+   * @example "http://example.com/image.jpg"
+   */
   imgUrl?: string;
 }
 
+/** Модель запроса на подключение */
+export interface ConnectionRequestDTO {
+  /**
+   * Идентификатор запроса
+   * @format int32
+   * @example 1
+   */
+  id?: number;
+  /**
+   * Статус запроса
+   * @example "DRAFT"
+   */
+  status?: string;
+  /**
+   * Имя потребителя
+   * @example "Иван Иванов"
+   */
+  consumer?: string;
+  /**
+   * Номер телефона
+   * @example "+7 (999) 123-45-67"
+   */
+  phoneNumber?: string;
+  /**
+   * Дата и время создания
+   * @format date-time
+   */
+  creationDatetime?: string;
+  /**
+   * Дата и время формирования
+   * @format date-time
+   */
+  formationDatetime?: string;
+  /**
+   * Дата и время завершения
+   * @format date-time
+   */
+  completionDatetime?: string;
+  /**
+   * Общая стоимость
+   * @format int32
+   * @example 1000
+   */
+  totalPrice?: number;
+  /**
+   * Менеджер
+   * @example "manager1"
+   */
+  manager?: string;
+  /**
+   * Клиент
+   * @example "client1"
+   */
+  client?: string;
+  /** Список услуг в запросе */
+  providerServiceList?: ProviderDutyInRequestDTO[];
+}
+
+/** Модель позиции в запросе на подключение */
+export interface ConnectionRequestPositionDTO {
+  /**
+   * Идентификатор позиции
+   * @format int32
+   * @example 1
+   */
+  id?: number;
+  /** Модель услуги провайдера в запросе */
+  providerDuty?: ProviderDutyInRequestDTO;
+  /** Модель запроса на подключение */
+  connectionRequest?: ConnectionRequestDTO;
+}
+
+/** Модель услуги провайдера в запросе */
+export interface ProviderDutyInRequestDTO {
+  /**
+   * Идентификатор услуги
+   * @format int32
+   * @example 1
+   */
+  id?: number;
+  /**
+   * Название услуги
+   * @example "Интернет 100 Мбит/с"
+   */
+  title?: string;
+  /**
+   * Цена услуги
+   * @format int32
+   * @example 500
+   */
+  price?: number;
+  /**
+   * Флаг ежемесячной оплаты
+   * @example true
+   */
+  monthlyPayment?: boolean;
+  /**
+   * Единица измерения
+   * @example "Мбит/с"
+   */
+  unit?: string;
+  /**
+   * Описание количества
+   * @example "100 Мбит/с"
+   */
+  amountDescription?: string;
+  /**
+   * URL изображения услуги
+   * @example "http://example.com/image.jpg"
+   */
+  imgUrl?: string;
+  /**
+   * Количество
+   * @format int32
+   * @example 1
+   */
+  amount?: number;
+}
+
+/** Модель для обновления запроса на подключение */
 export interface UpdateConnectionRequestDTO {
+  /**
+   * Имя потребителя
+   * @example "Иван Иванов"
+   */
   consumer: string;
+  /**
+   * Номер телефона
+   * @example "+7 (999) 123-45-67"
+   */
   phoneNumber: string;
 }
 
+/** Модель запроса аутентификации */
 export interface AuthRequestDTO {
+  /**
+   * Логин пользователя
+   * @example "user123"
+   */
   login?: string;
+  /**
+   * Пароль пользователя
+   * @example "password123"
+   */
   password?: string;
 }
 
+/** Модель ответа с JWT токеном */
 export interface JwtResponseDTO {
+  /**
+   * JWT токен доступа
+   * @example "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+   */
   accessToken?: string;
-  /** @format int64 */
+  /**
+   * Время истечения токена в секундах
+   * @format int64
+   * @example 3600
+   */
   expiresIn?: number;
 }
 
+/** Модель для создания новой услуги провайдера */
 export interface CreateProviderDutyDTO {
-  /** @format int32 */
+  /**
+   * Идентификатор услуги
+   * @format int32
+   * @example 1
+   */
   id?: number;
+  /**
+   * Название услуги
+   * @example "Интернет 100 Мбит/с"
+   */
   title?: string;
+  /**
+   * Описание услуги
+   * @example "Высокоскоростной интернет для дома"
+   */
   description?: string;
-  /** @format int32 */
+  /**
+   * Цена услуги
+   * @format int32
+   * @example 500
+   */
   price?: number;
+  /**
+   * Флаг ежемесячной оплаты
+   * @example true
+   */
   monthlyPayment?: boolean;
+  /**
+   * Единица измерения
+   * @example "Мбит/с"
+   */
   unit?: string;
+  /**
+   * Описание количества
+   * @example "100 Мбит/с"
+   */
   amountDescription?: string;
+  /**
+   * URL изображения услуги
+   * @example "http://example.com/image.jpg"
+   */
   imgUrl?: string;
+}
+
+/** Модель списка услуг */
+export interface ProviderDutiesResponseDTO {
+  /**
+   * Номер заявки
+   * @format int32
+   */
+  connectionRequestId?: number;
+  /**
+   * Количество услуг, добавленных в заявку на подключение
+   * @format int32
+   */
+  itemsInCart?: number;
+  /** Список услуг провайдера */
+  providerServiceList?: ProviderDuty[];
+}
+
+/** Модель услуги провайдера */
+export interface ProviderDuty {
+  /**
+   * Идентификатор услуги
+   * @format int32
+   * @example 1
+   */
+  id?: number;
+  /**
+   * Название услуги
+   * @example "Интернет 100 Мбит/с"
+   */
+  title?: string;
+  /**
+   * URL изображения услуги
+   * @example "http://example.com/image.jpg"
+   */
+  imgUrl?: string;
+  /**
+   * Описание услуги
+   * @example "Высокоскоростной интернет для дома"
+   */
+  description?: string;
+  /**
+   * Флаг активности услуги
+   * @example true
+   */
+  active?: boolean;
+  /**
+   * Цена услуги
+   * @format int32
+   * @example 500
+   */
+  price?: number;
+  /**
+   * Флаг ежемесячной оплаты
+   * @example true
+   */
+  monthlyPayment?: boolean;
+  /**
+   * Единица измерения
+   * @example "Мбит/с"
+   */
+  unit?: string;
+  /**
+   * Описание количества
+   * @example "100 Мбит/с"
+   */
+  amountDescription?: string;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
@@ -102,7 +394,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private format?: ResponseType;
 
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "http://172.20.10.6:8090" });
+    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "http://192.168.1.25:8090" });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -194,7 +486,7 @@ export class HttpClient<SecurityDataType = unknown> {
 /**
  * @title NET4Y API
  * @version 1.0.0
- * @baseUrl http://172.20.10.6:8090
+ * @baseUrl http://192.168.1.25:8090
  * @contact Валерий Нагапетян <valery.nagapetyan@yandex.ru> (https://vk.com/yep_idk)
  *
  * REST API провайдера для составления заявок на подключение и просмотра услуг.
@@ -215,11 +507,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     updateUser: (
       query: {
+        /** Модель пользователя */
         userRequest: UserDTO;
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<UserDTO, string>({
         path: `/api/users/update`,
         method: "PUT",
         query: query,
@@ -239,11 +532,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     updateProviderDuty: (
       dutyId: number,
       query: {
+        /** Модель для обновления услуги провайдера */
         providerDutyDTO: UpdateProviderDutyDTO;
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<UpdateProviderDutyDTO, string>({
         path: `/api/provider-duties/${dutyId}/update`,
         method: "PUT",
         query: query,
@@ -269,7 +563,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<ConnectionRequestPositionDTO, string>({
         path: `/api/duties-requests/${dutyId}/${requestId}/update`,
         method: "PUT",
         query: query,
@@ -289,11 +583,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     updateConnectionRequest: (
       requestId: number,
       query: {
+        /** Модель для обновления запроса на подключение */
         requestDTO: UpdateConnectionRequestDTO;
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<ConnectionRequestDTO, string | void>({
         path: `/api/connection-requests/${requestId}/update`,
         method: "PUT",
         query: query,
@@ -317,7 +612,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<ConnectionRequestDTO, string | void>({
         path: `/api/connection-requests/${requestId}/resolve`,
         method: "PUT",
         query: query,
@@ -335,7 +630,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     formConnectionRequest: (requestId: number, params: RequestParams = {}) =>
-      this.request<object, any>({
+      this.request<ConnectionRequestDTO, string | void>({
         path: `/api/connection-requests/${requestId}/form`,
         method: "PUT",
         secure: true,
@@ -352,7 +647,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     logoutUser: (params: RequestParams = {}) =>
-      this.request<string, any>({
+      this.request<string, string>({
         path: `/api/users/logout`,
         method: "POST",
         secure: true,
@@ -370,11 +665,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     loginUser: (
       query: {
+        /** Модель запроса аутентификации */
         authRequestDTO: AuthRequestDTO;
       },
       params: RequestParams = {},
     ) =>
-      this.request<JwtResponseDTO, any>({
+      this.request<JwtResponseDTO, string>({
         path: `/api/users/login`,
         method: "POST",
         query: query,
@@ -393,11 +689,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     createUser: (
       query: {
+        /** Модель пользователя */
         userRequest: UserDTO;
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<UserDTO, string>({
         path: `/api/users/create`,
         method: "POST",
         query: query,
@@ -422,7 +719,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<string, any>({
+      this.request<string, string>({
         path: `/api/provider-duties/${dutyId}/image`,
         method: "POST",
         body: data,
@@ -441,7 +738,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     addProviderDutyToRequest: (dutyId: number, params: RequestParams = {}) =>
-      this.request<object, any>({
+      this.request<ConnectionRequestDTO, string>({
         path: `/api/provider-duties/${dutyId}/add`,
         method: "POST",
         secure: true,
@@ -459,11 +756,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     createProviderDuty: (
       query: {
+        /** Модель для создания новой услуги провайдера */
         providerDutyDTO: CreateProviderDutyDTO;
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<CreateProviderDutyDTO, string>({
         path: `/api/provider-duties/create`,
         method: "POST",
         query: query,
@@ -483,11 +781,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getAllProviderDuties: (
       query?: {
         title?: string;
-        monthlyPayment?: boolean; 
+        monthlyPayment?: boolean;
       },
       params: RequestParams = {},
     ) =>
-      this.request<Record<string, object>, any>({
+      this.request<ProviderDutiesResponseDTO, string>({
         path: `/api/provider-duties`,
         method: "GET",
         query: query,
@@ -505,7 +803,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getProviderDutyById: (dutyId: number, params: RequestParams = {}) =>
-      this.request<object, any>({
+      this.request<ProviderDuty, string>({
         path: `/api/provider-duties/${dutyId}`,
         method: "GET",
         secure: true,
@@ -531,7 +829,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<object, any>({
+      this.request<ConnectionRequestDTO, string>({
         path: `/api/connection-requests`,
         method: "GET",
         query: query,
@@ -549,7 +847,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getConnectionRequestById: (requestId: number, params: RequestParams = {}) =>
-      this.request<object, any>({
+      this.request<ConnectionRequestDTO, string | void>({
         path: `/api/connection-requests/${requestId}`,
         method: "GET",
         secure: true,
@@ -566,7 +864,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     deleteProviderDuty: (dutyId: number, params: RequestParams = {}) =>
-      this.request<string, any>({
+      this.request<string, string>({
         path: `/api/provider-duties/${dutyId}/delete`,
         method: "DELETE",
         secure: true,
@@ -583,7 +881,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     deleteProviderDutyFromConnectionRequest: (dutyId: number, requestId: number, params: RequestParams = {}) =>
-      this.request<string, any>({
+      this.request<string, string>({
         path: `/api/duties-requests/${dutyId}/${requestId}/delete`,
         method: "DELETE",
         secure: true,
