@@ -1,0 +1,19 @@
+.navbar {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
+    background-color: "#ffffff";
+}
+
+.register-link {
+    color: #ffffff !important;
+    background-color: #9147FF;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link {
+    background-color: rgb(173, 173, 173);
+    text-decoration: none;
+    font-weight: 500;
+}
+

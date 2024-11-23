@@ -349,8 +349,10 @@ export interface ProviderDuty {
   amountDescription?: string;
 }
 
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
+import type { AxiosError, AxiosInstance, AxiosRequestConfig,  AxiosResponse, HeadersDefaults, InternalAxiosRequestConfig, ResponseType } from "axios";
 import axios from "axios";
+import { store } from "../store/store";
+import { logoutUser } from "../store/slices/userAuthSlice";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -495,6 +497,33 @@ export class HttpClient<SecurityDataType = unknown> {
  * <ul><li>https://github.com/vcreatorv/bmstu_iu5_web</li></ul>
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  constructor(config: ApiConfig<SecurityDataType> = {}) {
+    super(config);
+    this.instance.interceptors.request.use((config: InternalAxiosRequestConfig ) => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        config.headers = config.headers || {};
+        config.headers['Authorization'] = `Bearer ${token}`;
+      }
+      return config;
+    });
+
+    this.instance.interceptors.response.use(
+      (response) => response,
+      (error: AxiosError) => {
+        if (error.response && error.response.status === 401) {
+          // Токен истек, выполняем выход только если токен был отправлен
+          const token = localStorage.getItem('accessToken');
+          if (token) {
+            store.dispatch(logoutUser());
+          }
+        }
+        return Promise.resolve();
+      }
+    );
+  }
+
+
   api = {
     /**
      * @description Позволяет изменить данные ЛК пользователя
@@ -505,18 +534,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/api/users/update
      * @secure
      */
-    updateUser: (
-      query: {
-        /** Модель пользователя */
-        userRequest: UserDTO;
-      },
-      params: RequestParams = {},
-    ) =>
+    updateUser: (data: UserDTO, params: RequestParams = {}) =>
       this.request<UserDTO, string>({
         path: `/api/users/update`,
         method: "PUT",
-        query: query,
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -529,19 +553,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/api/provider-duties/{dutyID}/update
      * @secure
      */
-    updateProviderDuty: (
-      dutyId: number,
-      query: {
-        /** Модель для обновления услуги провайдера */
-        providerDutyDTO: UpdateProviderDutyDTO;
-      },
-      params: RequestParams = {},
-    ) =>
+    updateProviderDuty: (dutyId: number, data: UpdateProviderDutyDTO, params: RequestParams = {}) =>
       this.request<UpdateProviderDutyDTO, string>({
         path: `/api/provider-duties/${dutyId}/update`,
         method: "PUT",
-        query: query,
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -580,19 +598,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/api/connection-requests/{requestID}/update
      * @secure
      */
-    updateConnectionRequest: (
-      requestId: number,
-      query: {
-        /** Модель для обновления запроса на подключение */
-        requestDTO: UpdateConnectionRequestDTO;
-      },
-      params: RequestParams = {},
-    ) =>
+    updateConnectionRequest: (requestId: number, data: UpdateConnectionRequestDTO, params: RequestParams = {}) =>
       this.request<ConnectionRequestDTO, string | void>({
         path: `/api/connection-requests/${requestId}/update`,
         method: "PUT",
-        query: query,
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -663,18 +675,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/users/login
      * @secure
      */
-    loginUser: (
-      query: {
-        /** Модель запроса аутентификации */
-        authRequestDTO: AuthRequestDTO;
-      },
-      params: RequestParams = {},
-    ) =>
+    loginUser: (data: AuthRequestDTO, params: RequestParams = {}) =>
       this.request<JwtResponseDTO, string>({
         path: `/api/users/login`,
         method: "POST",
-        query: query,
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -687,18 +694,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/users/create
      * @secure
      */
-    createUser: (
-      query: {
-        /** Модель пользователя */
-        userRequest: UserDTO;
-      },
-      params: RequestParams = {},
-    ) =>
+    createUser: (data: UserDTO, params: RequestParams = {}) =>
       this.request<UserDTO, string>({
         path: `/api/users/create`,
         method: "POST",
-        query: query,
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -754,18 +756,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/provider-duties/create
      * @secure
      */
-    createProviderDuty: (
-      query: {
-        /** Модель для создания новой услуги провайдера */
-        providerDutyDTO: CreateProviderDutyDTO;
-      },
-      params: RequestParams = {},
-    ) =>
+    createProviderDuty: (data: CreateProviderDutyDTO, params: RequestParams = {}) =>
       this.request<CreateProviderDutyDTO, string>({
         path: `/api/provider-duties/create`,
         method: "POST",
-        query: query,
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 

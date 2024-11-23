@@ -1,33 +1,38 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IUser {
-    username: string;
-    isAuth: boolean;
+
+interface UserState {
+  isAuth: boolean;
+  login: string;
+  accessToken: string | null;
 }
 
-const initialState: IUser = {
-    isAuth: false,
-    username: "",
+const initialState: UserState = {
+  isAuth: false,
+  login: "",
+  accessToken: null,
 };
 
 export const userAuthSlice = createSlice({
-    name: "userAuthSlice",
-    initialState,
-    reducers: {
-        refreshUser: (state) => {
-            state.isAuth = false;
-            state.username = "";
-        },
-        saveUser: (state, action: PayloadAction<IUser>) => {
-            state.username = action.payload.username;
-            state.isAuth = action.payload.isAuth;
-        },
+  name: "userAuth",
+  initialState,
+  reducers: {
+    logoutUser: (state) => {
+      state.isAuth = false;
+      state.login = "";
+      state.accessToken = null;
+      localStorage.removeItem('accessToken');
     },
+    saveUser: (state, action: PayloadAction<{ login: string; accessToken: string }>) => {
+      state.login = action.payload.login;
+      state.isAuth = true;
+      state.accessToken = action.payload.accessToken;
+      localStorage.setItem('accessToken', action.payload.accessToken);
+    },
+  },
 });
 
-export const {
-    saveUser,
-    refreshUser,
-} = userAuthSlice.actions;
+export const { saveUser, logoutUser } = userAuthSlice.actions;
 
 export default userAuthSlice.reducer;
+
