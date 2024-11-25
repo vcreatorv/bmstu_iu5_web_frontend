@@ -3,15 +3,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface ProviderServiceState {
   searchTitle: string;
   tariffType: boolean | null;
+  connectionRequestId: number;
 }
 
 const initialState: ProviderServiceState = {
   searchTitle: '',
   tariffType: null,
+  connectionRequestId: 0,
 };
 
-const providerServiceSlice = createSlice({
-  name: 'providerServiceSlice',
+const appSlice = createSlice({
+  name: 'appSlice',
   initialState,
   reducers: {
     setSearchTitle: (state, action: PayloadAction<string>) => {
@@ -20,12 +22,16 @@ const providerServiceSlice = createSlice({
     setTariffType: (state, action: PayloadAction<boolean | null>) => {
       state.tariffType = action.payload;
     },
+    setConnectionRequestData: (state, action: PayloadAction<number>) => {
+      state.connectionRequestId = action.payload;
+    },
   },
 });
 
 export const {
    setSearchTitle, 
-   setTariffType
-} = providerServiceSlice.actions;
+   setTariffType,
+   setConnectionRequestData,
+} = appSlice.actions;
 
-export default providerServiceSlice.reducer;
+export default appSlice.reducer;

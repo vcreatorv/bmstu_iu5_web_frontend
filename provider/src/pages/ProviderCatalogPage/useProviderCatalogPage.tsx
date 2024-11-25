@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import { IProviderService } from "../../core/api/service/typing";
-// import { getProviderServiceList } from "../../core/api/service";
 import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK } from "../../core/mock/porivderServicesList";
 import { ChangeEvent } from "../../App.typing";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
-import { setSearchTitle, setTariffType } from "../../core/store/slices/providerServiceSlice";
 import { api } from "../../core/api";
-import axios from "axios";
-import { logoutUser } from "../../core/store/slices/userAuthSlice";
+import { setConnectionRequestData, setSearchTitle, setTariffType } from "../../core/store/slices/appSlice";
 
 
 export const useProviderCatalogPage = () => {
     const dispatch = useAppDispatch();
-    const { searchTitle, tariffType } = useAppSelector((state) => state.providerService);
-    const { isAuth, accessToken } = useAppSelector((state) => state.userAuth);
+    const { searchTitle, tariffType, connectionRequestId } = useAppSelector((state) => state.app);
+    const { accessToken } = useAppSelector((state) => state.user);
     const [providerServiceList, setProviderServiceList] = useState<IProviderService[]>([]);
-    const [connectionRequestId, setConnectionRequestId] = useState<number>(0);
     const [itemsInCart, setItemsInCart] = useState<number>(0);
 
     const fetchProviderServices = async (title?: string, monthlyPayment?: boolean | null) => {
@@ -28,7 +24,7 @@ export const useProviderCatalogPage = () => {
             if (response.data && typeof response.data === 'object') {
                 const data = response.data as Record<string, any>;
                 setProviderServiceList(data.providerServiceList || []);
-                setConnectionRequestId(data.connectionRequestId || -1);
+                dispatch(setConnectionRequestData(data.connectionRequestId));
                 setItemsInCart(data.itemsInCart || 0);
             }
         } catch (error) {          
@@ -45,7 +41,7 @@ export const useProviderCatalogPage = () => {
                 );
             }
             setProviderServiceList(filteredProviderService);
-            setConnectionRequestId(0);
+            dispatch(setConnectionRequestData(0));
             setItemsInCart(0);
         }
     };

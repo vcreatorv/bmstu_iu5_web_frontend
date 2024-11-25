@@ -4,7 +4,7 @@ import { MainPage } from "./pages/MainPage";
 import { ProviderServicePage } from "./pages/ProviderServicePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
-import { UserPage } from "./pages/UserPage";
+import { UserAccountPage } from "./pages/UserAccountPage";
 import { ConnectionRequestPage } from "./pages/ConnectionRequestPage";
 
 
@@ -31,8 +31,8 @@ export const AppRoutes = () => {
             element: <RegisterPage />,
         },
         {
-            path: "/user",
-            element: <UserPage />,
+            path: "/user-account",
+            element: <UserAccountPage />,
         },
         {
             path: "/connection-request",

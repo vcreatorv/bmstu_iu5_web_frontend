@@ -23,9 +23,12 @@ export const ProviderCatalogPage: FC = () => {
     <>
     <Navbar/>
     <Container className="pb-4 d-flex flex-column mx-auto" style={{maxWidth:'1200px'}}>
-      <Container className="d-flex flex-row justify-content-between mb-5 mt-5 p-0">
+      <Container className="d-flex flex-row m-0 mt-5 mb-5 p-0" style={{maxWidth:'1200px'}}>
         <Breadcrumbs endItem="Каталог"/>
+        <div className='ms-auto'>
         <Cart connectionRequestId={connectionRequestId ? connectionRequestId : 0} itemsInCart={itemsInCart} />
+        </div>
+        
       </Container>
       <div className="d-flex flex-column flex-md-row gap-3 mb-4 justify-content-center">
           <div className=" d-flex flex-row col-12 col-md-8 gap-2">

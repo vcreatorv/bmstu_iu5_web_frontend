@@ -20,7 +20,7 @@ export const ProviderServiceCard: FC<IProviderServiceProps>= (providerService: I
             <Card.Img variant="top" src={providerService.imgUrl ? (providerService.imgUrl) : (unknownImage)}
             style={{ 
                 width: '100%', 
-                height: '300px', 
+                maxHeight: '280px', 
                 objectFit: 'cover'
             }}   
             
@@ -28,8 +28,8 @@ export const ProviderServiceCard: FC<IProviderServiceProps>= (providerService: I
             <Card.Body className="d-flex flex-column">
             <Card.Title>{providerService.title}</Card.Title>
             <Card.Text className="fw-medium fs-5">{renderPrice()}</Card.Text>
-            <div className="mt-auto d-flex justify-content-between">
-                <Button variant="warning" className="w-100 btn-lg me-2"
+            <div className="mt-auto d-flex flex-column flex-md-row justify-content-between gap-2">
+                <Button variant="warning" className="w-100 btn-lg"
                 style={{ transition: "transform 550ms", backgroundColor: "#fed305", borderColor: "#fed305", fontWeight: "500", color: "#373737"}}
                 onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}

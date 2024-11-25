@@ -22,6 +22,11 @@ export interface UserDTO {
    */
   password?: string;
   /**
+   * Имя пользователя
+   * @example "John Doe"
+   */
+  username?: string;
+  /**
    * Роль пользователя
    * @example "BUYER"
    */
@@ -349,10 +354,10 @@ export interface ProviderDuty {
   amountDescription?: string;
 }
 
-import type { AxiosError, AxiosInstance, AxiosRequestConfig,  AxiosResponse, HeadersDefaults, InternalAxiosRequestConfig, ResponseType } from "axios";
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, InternalAxiosRequestConfig, ResponseType } from "axios";
 import axios from "axios";
-import { store } from "../store/store";
-import { logoutUser } from "../store/slices/userAuthSlice";
+import { logoutUser } from "../store/slices/userSlice";
+import { store } from "../store";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -522,8 +527,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }
     );
   }
-
-
+  
   api = {
     /**
      * @description Позволяет изменить данные ЛК пользователя

@@ -2,10 +2,10 @@ import { FC, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useAppDispatch } from "../../core/store/hooks";
 import { api } from "../../core/api";
-import { saveUser } from "../../core/store/slices/userAuthSlice";
 import { AuthRequestDTO } from "../../core/api/API";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { saveUser } from "../../core/store/slices/userSlice";
 
 
 export const LoginForm: FC = () => {
@@ -29,12 +29,14 @@ export const LoginForm: FC = () => {
             const response = await api.loginUser(authRequestDTO);
     
             if (response.data.accessToken) {
-                dispatch(saveUser({ login, accessToken: response.data.accessToken }));
+                dispatch(saveUser({ login: login, accessToken: response.data.accessToken }));
                 navigate('/provider-duties');
-            } else {
+            } 
+            else {
                 setError('Ошибка авторизации. Попробуйте снова.');
             }
-        } catch (err) {
+        } 
+        catch (err) {
             setError('Такого пользователя нет. Проверьте данные.');
             console.error(err);
         }
@@ -68,7 +70,7 @@ export const LoginForm: FC = () => {
             {error && <div style={{ color: 'red' }}>{error}</div>}
         </Form>
         <p className="fs-5 text-center">Нет аккаунта?
-             <Link to='/register'>
+             <Link className="ps-2" to='/register'>
                 Создайте!
              </Link>
         </p>
