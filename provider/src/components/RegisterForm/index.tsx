@@ -11,6 +11,7 @@ export const RegisterForm: FC = () => {
     const [username, setUsername] = useState('');
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -19,6 +20,11 @@ export const RegisterForm: FC = () => {
         e.preventDefault();
         setError(null);
 
+        if (password !== repeatPassword) {
+            setError('Пароли не совпадают.');
+            return;
+        }
+        
         const userDTO: UserDTO = {
             login: login,
             password: password,
@@ -78,8 +84,23 @@ export const RegisterForm: FC = () => {
                     />
                     <label htmlFor="password">Пароль</label>
                 </Form.Floating>
-                {error && <div className="text-danger mt-3">{error}</div>}
+
+                <Form.Floating>
+                    <Form.Control
+                        id="repeatPassword"
+                        type="password"
+                        value={repeatPassword}
+                        onChange={(e) => setRepeatPassword(e.target.value)}
+                    />
+                    <label htmlFor="repeatPassword">Повторите пароль</label>
+                </Form.Floating>
+
                 <button type="submit" className="fs-5 btn btn-block w-100" style={{ color: "#ffffff", backgroundColor: "#210772"}}>Зарегистрироваться</button>
+                {error && (
+                <div className="alert alert-danger mt-3">
+                    {error}
+                </div>
+                )}
                 </Form>
           </div> 
     );

@@ -9,10 +9,9 @@ import { setConnectionRequestData, setSearchTitle, setTariffType } from "../../c
 
 export const useProviderCatalogPage = () => {
     const dispatch = useAppDispatch();
-    const { searchTitle, tariffType, connectionRequestId } = useAppSelector((state) => state.app);
+    const { searchTitle, tariffType, connectionRequestId, itemsInCart } = useAppSelector((state) => state.app);
     const { accessToken } = useAppSelector((state) => state.user);
     const [providerServiceList, setProviderServiceList] = useState<IProviderService[]>([]);
-    const [itemsInCart, setItemsInCart] = useState<number>(0);
 
     const fetchProviderServices = async (title?: string, monthlyPayment?: boolean | null) => {
         try {
@@ -24,10 +23,10 @@ export const useProviderCatalogPage = () => {
             if (response.data && typeof response.data === 'object') {
                 const data = response.data as Record<string, any>;
                 setProviderServiceList(data.providerServiceList || []);
-                dispatch(setConnectionRequestData(data.connectionRequestId));
-                setItemsInCart(data.itemsInCart || 0);
+                dispatch(setConnectionRequestData({connectionRequestId: data.connectionRequestId || connectionRequestId, itemsInCart: data.itemsInCart || itemsInCart}));
             }
-        } catch (error) {          
+        } 
+        catch (error) {          
             console.error("Ошибка получения списка услуг с бэкенда:", error);
             let filteredProviderService = PROVIDER_SERVICE_LIST_MOCK;
             if (title && title !== undefined) {
@@ -41,8 +40,7 @@ export const useProviderCatalogPage = () => {
                 );
             }
             setProviderServiceList(filteredProviderService);
-            dispatch(setConnectionRequestData(0));
-            setItemsInCart(0);
+            dispatch(setConnectionRequestData({connectionRequestId: 0, itemsInCart: 0}));
         }
     };
 

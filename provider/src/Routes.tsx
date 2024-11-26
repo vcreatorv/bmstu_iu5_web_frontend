@@ -19,7 +19,7 @@ export const AppRoutes = () => {
             element: <ProviderCatalogPage />,
         },
         {
-            path: "provider-duties/:id",
+            path: "provider-duties/:providerServiceId",
             element: <ProviderServicePage />,
         },
         {
@@ -35,7 +35,7 @@ export const AppRoutes = () => {
             element: <UserAccountPage />,
         },
         {
-            path: "/connection-request",
+            path: "/connection-request/:connectionRequestId",
             element: <ConnectionRequestPage />,
         },
     ];

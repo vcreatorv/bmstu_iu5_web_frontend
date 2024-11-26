@@ -1,152 +1,121 @@
-import { FC } from "react";
-import { Button, Card, Col, Container, FloatingLabel, Form, InputGroup, Row } from "react-bootstrap";
 import { Navbar } from "../../components/Navbar";
-import unknownImage from "/images/image_placeholder.jpg"
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { ProviderServiceCardInConnectionRequest } from "../../components/ProviderServiceCardInConnectionRequest";
+import { useConnectionRequestPage } from "./useConnectionRequestPage";
+import { ProviderDutyInRequestDTO } from "../../core/api/API";
 
-export const ConnectionRequestPage: FC = () => {
+
+export const ConnectionRequestPage: React.FC = () => {
+  const {
+    services,
+    totalPrice,
+    consumer,
+    phoneNumber,
+    notification,
+    handleProviderServiceAmountChange,
+    handleDelete,
+    handleFormConnectionRequest,
+    handleClearConnectionRequest,
+    handleConsumerChange,
+    handlePhoneNumberChange
+  } = useConnectionRequestPage();
+
   return (
     <>
       <Navbar />
-      <Container className="pt-4" style={{ maxWidth: '1000px' }}>
-        <h2 className="text-center mb-4">Заявка №1</h2>
+      <Container fluid className="pt-4">
+        <div className="position-relative">
+          <div className="mx-auto" style={{ width: '950px' }}>
+            <h1 className="text-center mb-4">Текущая заявка</h1>
 
-        {/* Контактная информация */}
-        <Row className="mb-4 justify-content-center">
-          <Col md={6} className="mb-3">
-            <Form.Floating>
-                <Form.Control
-                id="organization"
-                type="text"
-                placeholder="Иванов Иван Иванович"
-                defaultValue="Иванов Иван Иванович"
-                />
-                <label htmlFor="organization">Организация/ФИО</label>
-            </Form.Floating>
-          </Col>    
-          <Col md={6}>
-            <Form.Floating>
-                <Form.Control
-                id="phoneNumber"
-                type="text"
-                placeholder="+7 (XXX) XXX XX XX"
-                defaultValue="+7 (999) 555 85 85"
-                />
-                <label htmlFor="phoneNumber">Номер для связи</label>
-            </Form.Floating>
-          </Col>
-        </Row>
-
-        {/* Карточки услуг */}
-        <div className="mb-4 mx-auto">
-          <Card className="mb-3">
-            <Card.Body>
-              <Row>
-                <Col xs={3}>
-                  <div style={{ height: '130px' }}>
-                    <img
-                      src={ unknownImage }
-                      alt="Облачное видеонаблюдение"
-                      className="rounded-1 img-fluid h-100 w-100 object-fit-cover"
+            <Form onSubmit={handleFormConnectionRequest}>
+              <Row className="g-2 mb-4">
+                <Col md={6}>
+                  <Form.Floating>
+                    <Form.Control
+                      id="consumer"
+                      type="text"
+                      className="border-2"
+                      value={consumer}
+                      onChange={(e) => handleConsumerChange(e.target.value)}
+                      required
                     />
-                  </div>
+                    <label htmlFor="consumer">Организация/ФИО</label>
+                  </Form.Floating>
                 </Col>
-                <Col xs={9}>
-                  <h3 className="mb-4">Облачное видеонаблюдение</h3>
-                  <Row className="align-items-center">
-                    <Col xs={8}>
-                        <InputGroup className="w-75">
-                            <InputGroup.Text 
-                                className="border-2 border-end-0"
-                                id="basic-addon1"
-                                style={{ borderColor: "#b3b3b3"}}
-                            >
-                                количество камер
-                            </InputGroup.Text>
-                            <Form.Control
-                                type="number"
-                                min="1"
-                                default-value="1"
-                                placeholder="1"
-                                className="border-2"
-                                style={{ borderColor: "#b3b3b3"}}
-                            />
-                        </InputGroup>
-                    </Col>
-                    <Col xs={4} className="text-end">
-                      <p className="mb-0 fw-bold fs-5">1129 ₽/мес</p>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-
-          <Card className="mb-3">
-            <Card.Body>
-              <Row>
-                <Col xs={3}>
-                  <div style={{ height: '130px' }}>
-                    <img
-                      src={ unknownImage }
-                      alt="Виртуальная АТС"
-                      className="rounded-1 img-fluid h-100 w-100 object-fit-cover"
+                <Col md={6}>
+                  <Form.Floating>
+                    <Form.Control
+                      id="phoneNumber"
+                      type="text"
+                      className="border-2"
+                      value={phoneNumber}
+                      onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                      required
                     />
-                  </div>
-                </Col>
-                <Col xs={9}>
-                  <h3 className="mb-4">Виртуальная АТС</h3>
-                  <Row className="align-items-center">
-                    <Col xs={8}>
-                        <InputGroup className="w-75">
-                            <InputGroup.Text 
-                                className="border-2 border-end-0"
-                                id="basic-addon1"
-                                style={{ borderColor: "#b3b3b3"}}
-                            >
-                                количество номеров
-                            </InputGroup.Text>
-                            <Form.Control
-                                type="number"
-                                min="1"
-                                default-value="1"
-                                placeholder="1"
-                                className="border-2"
-                                style={{ borderColor: "#b3b3b3"}}
-                            />
-                        </InputGroup>
-                    </Col>
-                    <Col xs={4} className="text-end">
-                      <p className="mb-0 fw-bold fs-5">350 ₽/мес</p>
-                    </Col>
-                  </Row>
+                    <label htmlFor="phoneNumber">Номер для связи</label>
+                  </Form.Floating>
                 </Col>
               </Row>
-            </Card.Body>
-          </Card>
 
-          {/* Итого */}
-          <Card className="mb-4 border-2" style={{ borderColor: "#474747" }}>
-            <Card.Body>
-              <Row className="align-items-center">
-                <Col>
-                  <h5 className="mb-0">Итого:</h5>
-                </Col>
-                <Col className="text-end">
-                  <p className="mb-0 fw-bold fs-5">1479 ₽</p>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+              <div className="mb-4">
+                {services.map((service) => (
+                  <ProviderServiceCardInConnectionRequest
+                    key={service.id}
+                    providerService={service}
+                    onAmountChange={handleProviderServiceAmountChange}
+                    onDelete={handleDelete}
+                  />
+                ))}
 
-          {/* Кнопка удаления */}
-          <div>
-            <Button className="btn-lg rounded-2" 
-                style={{ backgroundColor: "#474747", borderColor: "#474747", transition: "transform 550ms"}}
-                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
-                onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
-            >
-                Удалить заявку
-            </Button>
+                <Card className="mb-4 border-2" style={{ borderColor: "#474747" }}>
+                  <Card.Body>
+                    <Row className="align-items-center">
+                      <Col>
+                        <h5 className="mb-0">Итого:</h5>
+                      </Col>
+                      <Col className="text-end">
+                        <p className="mb-0 fw-bold fs-5">{totalPrice} ₽</p>
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                </Card>
+
+                <div className="d-flex justify-content-between gap-2">
+                  <Button
+                    className="btn-lg rounded-2"
+                    style={{
+                      backgroundColor: "#474747",
+                      borderColor: "#474747",
+                      transition: "transform 550ms"
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
+                    onClick={handleClearConnectionRequest}
+                  >
+                    Очистить заявку
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="btn-lg rounded-2 text-dark fw-medium"
+                    style={{
+                      backgroundColor: "#FED305",
+                      borderColor: "#FED305",
+                      transition: "transform 550ms"
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
+                  >
+                    Оформить подключение
+                  </Button>
+                </div>
+              </div>
+            </Form>
+            {notification && (
+              <div className="alert alert-danger mt-3">
+                {notification}
+              </div>
+            )}
           </div>
         </div>
       </Container>

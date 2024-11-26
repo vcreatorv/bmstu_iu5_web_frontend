@@ -103,8 +103,12 @@ export const UserAccountForm: React.FC = () => {
                 </Form.Floating>
 
                 <button type="submit" className="fs-5 btn btn-block w-100" style={{ color: "#ffffff", backgroundColor: "#210772"}}>Сохранить</button>
+                {error && (
+                <div className="alert alert-danger mt-3">
+                    {error}
+                </div>
+                )}
             </Form>
-            {error && <div className="text-danger mt-3">{error}</div>}
         </div>  
     );
 }

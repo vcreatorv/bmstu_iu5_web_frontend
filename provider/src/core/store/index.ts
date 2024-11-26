@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import  appSlice from './slices/appSlice';
 import  userSlice from './slices/userSlice';
+import cartSlice from './slices/cartSlice';
 
 const rootReducer = combineReducers({
   app: appSlice,
-  user: userSlice
+  user: userSlice,
+  cart: cartSlice
 });
 
 export const store = configureStore({

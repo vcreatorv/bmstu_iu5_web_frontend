@@ -2,8 +2,6 @@ import { FC, useEffect, useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { Button, Card, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { IProviderService } from "../../core/api/service/typing";
-// import { getProviderServiceById } from "../../core/api/service";
 import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK} from "../../core/mock/porivderServicesList";
 import { Breadcrumbs } from "../../components/BreadCrumbs";
 import { api } from "../../core/api";
@@ -12,7 +10,7 @@ import { ProviderDuty } from "../../core/api/API";
 
 
 export const ProviderServicePage: FC = () => {
-    const {id} = useParams();
+    const { providerServiceId } = useParams<{ providerServiceId: string }>();
     const [providerServiceData, setProviderServiceData] = useState<ProviderDuty | null>(null);
     
     // useEffect(() => {
@@ -31,19 +29,19 @@ export const ProviderServicePage: FC = () => {
     // }, [id]);
 
     useEffect(() => {
-      if (id) {
-          api.getProviderDutyById(Number(id))
+      if (providerServiceId) {
+          api.getProviderDutyById(Number(providerServiceId))
               .then((response) => {
                   setProviderServiceData(response.data);
               })
               .catch(() => {
                   const providerService = PROVIDER_SERVICE_LIST_MOCK.find(
-                      (providerService) => providerService.id === Number(id)
+                      (providerService) => providerService.id === Number(providerServiceId)
                   );
                   setProviderServiceData(providerService || null);
               });
         }
-    }, [id]);
+    }, [providerServiceId]);
 
     if (!providerServiceData) {
         return (

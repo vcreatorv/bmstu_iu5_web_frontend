@@ -56,6 +56,7 @@ export const LoginForm: FC = () => {
                 />
                 <label htmlFor="login">Логин</label>
             </Form.Floating>
+            
             <Form.Floating>
                 <Form.Control
                     type="password"
@@ -66,8 +67,13 @@ export const LoginForm: FC = () => {
                 />
                 <label htmlFor="password">Пароль</label>
             </Form.Floating>
+
             <button id="sign-in" type="submit" className="fs-5 btn btn-block w-100" style={{ color: "#ffffff", backgroundColor: "#210772"}}>Войти</button>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            {error && (
+              <div className="alert alert-danger mt-3">
+                {error}
+              </div>
+            )}
         </Form>
         <p className="fs-5 text-center">Нет аккаунта?
              <Link className="ps-2" to='/register'>
