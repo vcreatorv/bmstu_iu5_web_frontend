@@ -32,21 +32,32 @@ export const ProviderServiceCard: FC<ProviderDuty> = (providerService) => {
       try {
         const response = await api.addProviderDutyToRequest(providerService.id!);
         
-        if (id === 0) {
-          dispatch(initializeConnectionRequest({
-            id: response.data.id,
-            providerServiceList: [],
-            consumer: '',
-            phoneNumber: ''
-          }));
-          dispatch(setConnectionRequestData({connectionRequestId: response.data.id!}))
-        }
-
-        dispatch(addToConnectionRequest(providerService));
-        dispatch(incrementServicesInConnectionRequest());
-      
         if (response.data) {
-          console.log("Услуга успешно добавлена в заявку");
+          if (id === 0) {
+            dispatch(initializeConnectionRequest({
+              id: response.data.id,
+              providerServiceList: [],
+              consumer: '',
+              phoneNumber: ''
+            }));
+            dispatch(setConnectionRequestData({connectionRequestId: response.data.id!}))
+          }
+  
+          // dispatch(addToConnectionRequest(providerService));
+          dispatch(addToConnectionRequest(
+            {
+                id: providerService?.id,
+                title: providerService?.title,
+                price: providerService?.price,
+                monthlyPayment: providerService?.monthlyPayment,
+                unit: providerService?.unit,
+                amountDescription: providerService?.amountDescription,
+                imgUrl: providerService!.imgUrl,
+                amount: 1,
+            }
+          ));
+  
+          dispatch(incrementServicesInConnectionRequest());
         }
       } 
       catch (error) {

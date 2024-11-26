@@ -7,57 +7,19 @@ import { Breadcrumbs } from "../../components/BreadCrumbs";
 import { api } from "../../core/api";
 import unknownImage from "/images/image_placeholder.jpg"
 import { ProviderDuty } from "../../core/api/API";
+import { useProviderServicePage } from "./useProviderServicePage";
 
 
 export const ProviderServicePage: FC = () => {
-    const { providerServiceId } = useParams<{ providerServiceId: string }>();
-    const [providerServiceData, setProviderServiceData] = useState<ProviderDuty | null>(null);
-    
-    // useEffect(() => {
-    //     if (id) {
-    //         getProviderServiceById(id)
-    //             .then((data) => {
-    //                 setProviderServiceData(data);
-    //             })
-    //             .catch(() => {
-    //                 const providerService = PROVIDER_SERVICE_LIST_MOCK.find(
-    //                     (providerService) => providerService.id === Number(id)
-    //                 );
-    //                 setProviderServiceData(providerService || null);
-    //             });
-    //     }
-    // }, [id]);
+    const { renderPrice, providerService, handleAddToConnectionRequest } = useProviderServicePage();
 
-    useEffect(() => {
-      if (providerServiceId) {
-          api.getProviderDutyById(Number(providerServiceId))
-              .then((response) => {
-                  setProviderServiceData(response.data);
-              })
-              .catch(() => {
-                  const providerService = PROVIDER_SERVICE_LIST_MOCK.find(
-                      (providerService) => providerService.id === Number(providerServiceId)
-                  );
-                  setProviderServiceData(providerService || null);
-              });
-        }
-    }, [providerServiceId]);
-
-    if (!providerServiceData) {
+    if (!providerService) {
         return (
             <>
                 <Navbar/>
             </>
         );
     }
-    
-    const renderPrice = () => {
-        if (providerServiceData.monthlyPayment) {
-          return `от ${providerServiceData.price} ₽/мес`;
-        } else {
-          return `от ${providerServiceData.price} ₽ за ${providerServiceData.unit}`;
-        }
-    };
     
     return (
       <>
@@ -70,7 +32,7 @@ export const ProviderServicePage: FC = () => {
               link: "/provider-duties"
             }
           ]}
-          endItem={providerServiceData.title}
+          endItem={providerService.title}
         />
       </Container>
       
@@ -78,7 +40,7 @@ export const ProviderServicePage: FC = () => {
         <Card className="col-12 col-md-8 col-lg-5 rounded-4 shadow-sm" style={{ overflow: 'hidden' }}>
           <Card.Img 
             variant="top" 
-            src={providerServiceData.imgUrl ? (providerServiceData.imgUrl) : (unknownImage)}
+            src={providerService.imgUrl ? (providerService.imgUrl) : (unknownImage)}
             style={{ 
               width: '100%', 
               height: '300px',
@@ -86,26 +48,27 @@ export const ProviderServicePage: FC = () => {
             }}   
           />
           <Card.Body className="d-flex flex-column">
-            <Card.Title className="h4 mb-3">{providerServiceData.title}</Card.Title>
+            <Card.Title className="h4 mb-3">{providerService.title}</Card.Title>
             <Card.Text 
               className="fw-medium mb-4" 
-              dangerouslySetInnerHTML={{ __html: String(providerServiceData.description) }}
+              dangerouslySetInnerHTML={{ __html: String(providerService.description) }}
             />
             <div className="mt-auto d-flex flex-row gap-3 align-items-center">
               <Button 
                 variant="warning" 
-                className="w-100 w-sm-50 btn-lg"
+                className="w-100 w-sm-50 btn-lg fw-medium text-dark"
                 style={{ 
                   transition: "transform 550ms", 
                   backgroundColor: "#fed305", 
                   borderColor: "#fed305" 
                 }}
+                onClick={handleAddToConnectionRequest}
                 onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
               >
-                Купить
+                Добавить
               </Button>
-              <Card.Text className="w-100 w-sm-50 fw-medium fs-4 text-center mb-0">
+              <Card.Text className="w-100 w-sm-50 fw-medium fs-4 text-center text-dark mb-0">
                 {renderPrice()}
               </Card.Text>
             </div>
