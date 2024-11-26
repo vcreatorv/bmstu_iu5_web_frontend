@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { ProviderServiceCardInConnectionRequest } from "../../components/ProviderServiceCardInConnectionRequest";
 import { useConnectionRequestPage } from "./useConnectionRequestPage";
 import { ProviderDutyInRequestDTO } from "../../core/api/API";
+import { Breadcrumbs } from "../../components/BreadCrumbs";
 
 
 export const ConnectionRequestPage: React.FC = () => {
@@ -12,6 +13,7 @@ export const ConnectionRequestPage: React.FC = () => {
     consumer,
     phoneNumber,
     notification,
+    connectionRequestId,
     handleProviderServiceAmountChange,
     handleDelete,
     handleFormConnectionRequest,
@@ -24,7 +26,19 @@ export const ConnectionRequestPage: React.FC = () => {
     <>
       <Navbar />
       <Container fluid className="pt-4">
-        <div className="position-relative">
+        <Container className="mt-4" style={{ maxWidth: "1200px" }}>
+          <Breadcrumbs
+              middleItems={[
+                  {
+                      name: "Каталог",
+                      link: "/provider-duties"
+                  }
+              ]}
+              endItem={"Заявка на подключение интернет услуг № " + connectionRequestId}
+          />
+        </Container>
+        
+        <div className="position-relative mt-5">
           <div className="mx-auto" style={{ width: '950px' }}>
             <h1 className="text-center mb-4">Текущая заявка</h1>
 

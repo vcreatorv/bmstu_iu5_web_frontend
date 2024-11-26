@@ -1,12 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Navbar } from "../../components/Navbar";
 import { Button, Card, Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK} from "../../core/mock/porivderServicesList";
 import { Breadcrumbs } from "../../components/BreadCrumbs";
-import { api } from "../../core/api";
 import unknownImage from "/images/image_placeholder.jpg"
-import { ProviderDuty } from "../../core/api/API";
 import { useProviderServicePage } from "./useProviderServicePage";
 
 

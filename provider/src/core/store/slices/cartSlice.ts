@@ -57,7 +57,11 @@ const connectionRequestSlice = createSlice({
       state.phoneNumber = action.payload;
     },
     clearConnectionRequest: (state) => {
-      return initialState;
+      state.services = [];
+      state.totalPrice = 0;
+      state.consumer = '';
+      state.phoneNumber = '';
+      state.id = 0;
     },
   },
 });

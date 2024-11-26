@@ -60,21 +60,31 @@ export const Navbar: FC = () => {
           
           <Nav>
             {isAuth ? (
-              <>
-                <Link to="/provider-duties" onClick={handleLogout} className="logout-link text-dark me-2 pe-2">
-                  Выйти
-                </Link>
-                <Link to="/user-account" className="d-none d-lg-block">
-                  <img
-                    src={accountImage}
-                    alt="User"
-                    className="img-fluid rounded-2"
-                    style={{ maxHeight: '40px' }}
-                  />
-                </Link>
-                <Link to="/user-account" className="d-lg-none profile-link">
-                  Профиль
-                </Link>
+             <>
+              <Link 
+                to="/provider-duties" 
+                onClick={handleLogout} 
+                className="logout-link text-dark d-flex align-items-center me-2"
+              >
+                Выйти
+              </Link>
+              
+              <Link to="/connection-requests-list" className="requests-link me-2 pe-2">
+                История заказов
+              </Link> 
+        
+              <Link to="/user-account" className="d-none d-lg-block ms-3">
+                <img
+                  src={accountImage}
+                  alt="User"
+                  className="img-fluid rounded-2"
+                  style={{ maxHeight: '40px' }}
+                />
+              </Link>
+        
+              <Link to="/user-account" className="d-lg-none profile-link">
+                Профиль
+              </Link>
               </>
             ) : (
               <>

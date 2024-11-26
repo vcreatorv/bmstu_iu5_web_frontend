@@ -88,6 +88,11 @@ export const useConnectionRequestPage = () => {
   };
 
   const handleClearConnectionRequest = async () => {
+    if (services.length < 1) {
+      navigate('/provider-duties');
+      return;
+    }
+
     try {
       await api.deleteConnectionRequest(Number(connectionRequestId));
       dispatch(clearConnectionRequest());
@@ -135,6 +140,7 @@ export const useConnectionRequestPage = () => {
     consumer,
     phoneNumber,
     notification,
+    connectionRequestId,
     handleProviderServiceAmountChange,
     handleDelete,
     handleFormConnectionRequest,

@@ -6,6 +6,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { UserAccountPage } from "./pages/UserAccountPage";
 import { ConnectionRequestPage } from "./pages/ConnectionRequestPage";
+import { ConnectionRequestsListPage } from "./pages/ConnectionRequestsListPage";
 
 
 export const AppRoutes = () => {
@@ -37,6 +38,10 @@ export const AppRoutes = () => {
         {
             path: "/connection-request/:connectionRequestId",
             element: <ConnectionRequestPage />,
+        },
+        {
+            path: "/connection-requests-list",
+            element: <ConnectionRequestsListPage />,
         },
     ];
     const routeResult = useRoutes(routes);

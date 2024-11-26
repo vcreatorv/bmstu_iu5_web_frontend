@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IProviderService } from "../../core/api/service/typing";
-import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK } from "../../core/mock/porivderServicesList";
+import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK } from "../../core/mock/providerServicesList";
 import { ChangeEvent } from "../../App.typing";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { api } from "../../core/api";

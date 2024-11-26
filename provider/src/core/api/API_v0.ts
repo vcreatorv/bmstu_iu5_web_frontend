@@ -822,15 +822,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     getAllConnectionRequests: (
       query?: {
-        /** @format date */
-        startDate?: string;
-        /** @format date */
-        endDate?: string;
+        /** @format date-time */
+        creationDatetime?: string;
+        /** @format date-time */
+        completionDatetime?: string;
         status?: string;
       },
       params: RequestParams = {},
     ) =>
-      this.request<ConnectionRequestDTO[], string>({
+      this.request<ConnectionRequestDTO, string>({
         path: `/api/connection-requests`,
         method: "GET",
         query: query,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK } from "../../core/mock/porivderServicesList";
+import { ProviderServiceList as PROVIDER_SERVICE_LIST_MOCK } from "../../core/mock/providerServicesList";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { api } from "../../core/api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -42,8 +42,8 @@ export const useProviderServicePage = () => {
     };
 
     const handleAddToConnectionRequest = async () => {
-      
-        if (services.find(service => service.id === providerServiceId) && id != 0) {
+        console.log(id + "jdjdjdj");
+        if (services.find(service => service.id === providerServiceId)) {
           console.log("Услуга уже добавлена в заявку");
           return;
         }
@@ -61,7 +61,6 @@ export const useProviderServicePage = () => {
                 }));
                 dispatch(setConnectionRequestData({connectionRequestId: response.data.id!}))
             }
-              
             dispatch(addToConnectionRequest(
             {
                 id: providerService?.id,
@@ -75,7 +74,7 @@ export const useProviderServicePage = () => {
             }
             ));
             dispatch(incrementServicesInConnectionRequest());
-            navigate("/connection-request/" + id);
+            navigate("/connection-request/" + response.data.id);
           }
         } 
         catch (error) {

@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { clearConnectionRequest } from './cartSlice';
+
 
 interface ProviderServiceState {
   searchTitle: string;
   tariffType: boolean | null;
+  filterConnectionRequestStatus?: string;
+  filterConnectionRequestStartDate?: string;
+  filterConnectionRequestEndDate?: string;
   connectionRequestId: number;
   itemsInCart: number;
 }
@@ -11,6 +14,9 @@ interface ProviderServiceState {
 const initialState: ProviderServiceState = {
   searchTitle: '',
   tariffType: null,
+  filterConnectionRequestStartDate: undefined,
+  filterConnectionRequestStatus: undefined,
+  filterConnectionRequestEndDate: undefined,
   connectionRequestId: 0,
   itemsInCart: 0,
 };
@@ -29,6 +35,15 @@ const appSlice = createSlice({
       state.connectionRequestId = action.payload.connectionRequestId;
       state.itemsInCart = action.payload.itemsInCart || 0;
     },
+    setFilterConnectionRequestStatus: (state, action: PayloadAction<string>) => {
+      state.filterConnectionRequestStatus = action.payload;
+    },
+    setFilterConnectionRequestStartDate: (state, action: PayloadAction<string>) => {
+        state.filterConnectionRequestStartDate = action.payload;
+    },
+    setFilterConnectionRequestEndDate: (state, action: PayloadAction<string>) => {
+        state.filterConnectionRequestEndDate = action.payload;
+    },
     incrementServicesInConnectionRequest: (state) => {
       state.itemsInCart += 1;
     },
@@ -45,6 +60,9 @@ export const {
    setSearchTitle, 
    setTariffType,
    setConnectionRequestData,
+   setFilterConnectionRequestStatus,
+   setFilterConnectionRequestStartDate,
+   setFilterConnectionRequestEndDate,
    incrementServicesInConnectionRequest,
    decrementServicesInConnectionRequest,
    clearAppState,

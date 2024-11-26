@@ -18,52 +18,61 @@
 } */
 
 @media (min-width: 992px) {
-    .login-link, .logout-link {
-        background-color: rgb(173, 173, 173);
-        text-decoration: none;
-        font-weight: 500;
-        padding: 0.25rem;
-        border-radius: 0.25rem;
-        
-    }
-  
-    .register-link {
-      font-size: 1rem;
-      border-radius: 0.25rem;
-      padding: 0.25rem 0.5rem;
-      text-decoration: none;
-      background-color: #9147FF;
-      color: #ffffff !important;
-    }
-
-    .catalog-link {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #212529;
-        text-decoration: none;
-    }
-  }
-  
-  @media (max-width: 991px) {
-    .login-link, .logout-link, .register-link, .profile-link {
-      font-size: 1.5rem;
-      font-weight: 500;
-      padding: 0;
-      color: #212529;
-      text-decoration: none;
-    }
-    
-    .catalog-link {
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #212529;
-        padding: 0;
-        text-decoration: none;
-    }
-
-  }
-  
-  .fw-500 {
+  .login-link, .logout-link {
+    background-color: rgb(173, 173, 173);
+    text-decoration: none;
     font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
+  .register-link, .requests-link {
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    background-color: #9147FF;
+    color: #ffffff !important;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .catalog-link {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #212529;
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .login-link, .logout-link, .register-link, .profile-link, .requests-link {
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    color: #212529;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .catalog-link {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #212529;
+    padding: 0;
+    text-decoration: none;
+  }
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
 
