@@ -6,6 +6,7 @@ import { ProviderServiceCard } from '../../components/ProviderServiceCardInCatal
 import { useProviderCatalogPage } from './useProviderCatalogPage';
 import { FC } from 'react';
 import { ProviderDuty } from '../../core/api/API';
+import {BeatLoader} from "react-spinners"
 
 export const ProviderCatalogPage: FC = () => {
   const {
@@ -17,6 +18,7 @@ export const ProviderCatalogPage: FC = () => {
     handleTariffTypeChange,
     searchTitle,
     tariffType,
+    isActive,
   } = useProviderCatalogPage();
 
   return (
@@ -59,13 +61,22 @@ export const ProviderCatalogPage: FC = () => {
             </Dropdown>
           </div>
         </div>
-        <Row xs={1} sm={2} lg={3} className="g-4 justify-content-start">
-          {providerServiceList.map((providerService: ProviderDuty) => (
-            <Col key={providerService.id} className="d-flex align-items-stretch">
-              <ProviderServiceCard {...providerService} />
-            </Col>
-          ))}          
-        </Row>
+        { isActive? 
+        <>
+          <Row xs={1} sm={2} lg={3} className="g-4 justify-content-start">
+            {providerServiceList.map((providerService: ProviderDuty) => (
+              <Col key={providerService.id} className="d-flex align-items-stretch">
+                <ProviderServiceCard {...providerService} />
+              </Col>
+            ))}          
+          </Row>
+        </>
+        
+        : 
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
+          <BeatLoader />
+        </div>
+        } 
       </Container>
     </>
   )

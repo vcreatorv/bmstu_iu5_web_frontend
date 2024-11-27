@@ -9,6 +9,7 @@ import { setConnectionRequestData, setSearchTitle, setTariffType } from "../../c
 
 export const useProviderCatalogPage = () => {
     const dispatch = useAppDispatch();
+    const [isActive, setIsActive] = useState<boolean>(false);
     const { searchTitle, tariffType, connectionRequestId, itemsInCart } = useAppSelector((state) => state.app);
     const { accessToken } = useAppSelector((state) => state.user);
     const [providerServiceList, setProviderServiceList] = useState<IProviderService[]>([]);
@@ -23,6 +24,7 @@ export const useProviderCatalogPage = () => {
             if (response.data && typeof response.data === 'object') {
                 const data = response.data as Record<string, any>;
                 setProviderServiceList(data.providerServiceList || []);
+                setIsActive(true);
                 dispatch(setConnectionRequestData({connectionRequestId: data.connectionRequestId || connectionRequestId, itemsInCart: data.itemsInCart || itemsInCart}));
             }
         } 
@@ -40,6 +42,7 @@ export const useProviderCatalogPage = () => {
                 );
             }
             setProviderServiceList(filteredProviderService);
+            setIsActive(true);
             dispatch(setConnectionRequestData({connectionRequestId: 0, itemsInCart: 0}));
         }
     };
@@ -72,5 +75,6 @@ export const useProviderCatalogPage = () => {
         handleTariffTypeChange,
         searchTitle,
         tariffType,
+        isActive,
     };
 };

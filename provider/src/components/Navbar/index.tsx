@@ -88,10 +88,10 @@ export const Navbar: FC = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="login-link text-dark me-2 pe-2">
+                <Link to="/login" className="login-link text-dark d-flex align-items-center me-2">
                   Войти
                 </Link>
-                <Link to="/register" className="register-link me-2 pe-2">
+                <Link to="/register" className="register-link d-flex align-items-center me-2">
                   Регистрация
                 </Link>
               </>
