@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../core/store';
-import { api } from '../../core/api';
-import { logoutUser, saveUser, saveUsername } from '../../core/store/slices/userSlice';
+import { updateUser } from '../../core/store/slices/userSlice';
 import { UserDTO } from '../../core/api/API';
+import { useAppDispatch, useAppSelector } from '../../core/store/hooks';
 
 export const UserAccountForm: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -14,8 +13,8 @@ export const UserAccountForm: React.FC = () => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const user = useSelector((state: RootState) => state.user);
+    const dispatch = useAppDispatch();
+    const user = useAppSelector((state: RootState) => state.user);
 
     useEffect(() => {
         setUsername(user.username);
@@ -38,13 +37,10 @@ export const UserAccountForm: React.FC = () => {
         };
 
         try {
-            const response = await api.updateUser(userDTO);
-
-            if (response.status === 200) {
-                // dispatch(logoutUser());
-                dispatch(saveUsername({username}));
-                //navigate('/login');
-                navigate('/provider-duties');
+            const resultAction = await dispatch(updateUser(userDTO));
+            
+            if (updateUser.fulfilled.match(resultAction)) {
+                navigate('/login');
             } 
             else {
                 setError('Не удалось обновить данные. Попробуйте еще раз.');

@@ -356,8 +356,6 @@ export interface ProviderDuty {
 
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, InternalAxiosRequestConfig, ResponseType } from "axios";
 import axios from "axios";
-import { logoutUser } from "../store/slices/userSlice";
-import { store } from "../store";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -520,7 +518,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           // Токен истек, выполняем выход только если токен был отправлен
           const token = localStorage.getItem('accessToken');
           if (token) {
-            store.dispatch(logoutUser());
+            localStorage.removeItem('accessToken');
           }
         }
         return Promise.resolve();

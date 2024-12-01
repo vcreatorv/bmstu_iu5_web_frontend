@@ -1,10 +1,9 @@
 import { FC, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../core/api";
 import { UserDTO } from "../../core/api/API";
 import { useAppDispatch } from "../../core/store/hooks";
-import { saveUsername } from "../../core/store/slices/userSlice";
+import { registerUser } from "../../core/store/slices/userSlice";
 
 
 export const RegisterForm: FC = () => {
@@ -15,37 +14,30 @@ export const RegisterForm: FC = () => {
     const [error, setError] = useState<string | null>(null);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
+  
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError(null);
-
-        if (password !== repeatPassword) {
-            setError('Пароли не совпадают.');
-            return;
-        }
-        
-        const userDTO: UserDTO = {
-            login: login,
-            password: password,
-            username: username,
-        };
-
-        try {
-            const response = await api.createUser(userDTO);
-
-            if (response.status === 200) {
-                dispatch(saveUsername({username}));
-                navigate('/login');
-            } 
-            else {
-                setError('Ошибка регистрации. Попробуйте снова.');
-            }
-        } 
-        catch (err) {
-            setError('Ошибка регистрации. Попробуйте снова.');
-            console.error(err);
-        }
+      e.preventDefault();
+      setError(null);
+  
+      if (password !== repeatPassword) {
+        setError('Пароли не совпадают.');
+        return;
+      }
+  
+      const userDTO: UserDTO = {
+        login: login,
+        password: password,
+        username: username,
+      };
+  
+      try {
+        const response = await dispatch(registerUser(userDTO)).unwrap();
+        navigate('/login');
+      } 
+      catch (err) {
+        setError('Ошибка регистрации. Попробуйте снова.');
+        console.error(err);
+      }
     };
     
     return (

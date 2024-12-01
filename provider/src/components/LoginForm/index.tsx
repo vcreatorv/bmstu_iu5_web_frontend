@@ -1,12 +1,9 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useAppDispatch } from "../../core/store/hooks";
-import { api } from "../../core/api";
-import { AuthRequestDTO } from "../../core/api/API";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { saveUser } from "../../core/store/slices/userSlice";
-
+import { loginUser } from "../../core/store/slices/userSlice";
 
 export const LoginForm: FC = () => {
     const [login, setLogin] = useState('');
@@ -19,26 +16,16 @@ export const LoginForm: FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-    
-        const authRequestDTO: AuthRequestDTO = {
-            login: login,
-            password: password
-        };
-    
-        try {
-            const response = await api.loginUser(authRequestDTO);
-    
-            if (response.data.accessToken) {
-                dispatch(saveUser({ login: login, accessToken: response.data.accessToken }));
-                navigate('/provider-duties');
-            } 
-            else {
-                setError('Ошибка авторизации. Попробуйте снова.');
-            }
+
+        const authRequestDTO = { login, password };
+
+        const resultAction = await dispatch(loginUser(authRequestDTO));
+
+        if (loginUser.fulfilled.match(resultAction)) {
+            navigate('/provider-duties');
         } 
-        catch (err) {
-            setError('Такого пользователя нет. Проверьте данные.');
-            console.error(err);
+        else {
+            setError(resultAction.payload as string);
         }
     };
 
@@ -83,3 +70,4 @@ export const LoginForm: FC = () => {
       </div>
     );
 }
+

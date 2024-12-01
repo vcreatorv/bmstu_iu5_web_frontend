@@ -1,16 +1,14 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import  appSlice from './slices/appSlice';
-import  userSlice from './slices/userSlice';
-import cartSlice from './slices/cartSlice';
-
-const rootReducer = combineReducers({
-  app: appSlice,
-  user: userSlice,
-  cart: cartSlice
-});
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './slices/userSlice';
+import appReducer from './slices/appSlice';
+import cartReducer from './slices/cartSlice';
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    user: userReducer,
+    app: appReducer,
+    cart: cartReducer
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

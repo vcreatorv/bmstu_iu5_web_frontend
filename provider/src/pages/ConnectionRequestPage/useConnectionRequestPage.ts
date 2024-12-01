@@ -43,10 +43,6 @@ export const useConnectionRequestPage = () => {
     }
   };
 
-  // const handleAmountChange = (id: number, amount: number) => {
-  //   dispatch(updateConnectionRequestItem({ id, amount }));
-  // };
-
   const handleProviderServiceAmountChange = async (id: number, amount: number) => {
     try {
       await api.updateAmountInDutyRequest(id, Number(connectionRequestId), { amount });
