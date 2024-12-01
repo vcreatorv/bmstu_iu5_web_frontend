@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../core/store/hooks';
 import { 
-  initializeConnectionRequest,
-  updateConnectionRequestService, 
-  removeFromConnectionRequest, 
   updateConsumer,
   updatePhoneNumber,
-  clearConnectionRequest 
+  clearConnectionRequest, 
+  loadConnectionRequest,
+  updateProviderServiceAmount,
+  deleteProviderDuty,
+  submitConnectionRequest,
+  deleteConnectionRequest
 } from "../../core/store/slices/cartSlice";
-import { api } from '../../core/api';
 import { clearAppState, decrementServicesInConnectionRequest } from '../../core/store/slices/appSlice';
 
 
@@ -23,111 +24,74 @@ export const useConnectionRequestPage = () => {
 
   useEffect(() => {
     if (connectionRequestId) {
-      loadConnectionRequest();
+      dispatch(loadConnectionRequest(Number(connectionRequestId)));
     }
-  }, [connectionRequestId]);
+  }, [connectionRequestId, dispatch]);
 
-
-  const loadConnectionRequest = async () => {
-    if (Number(connectionRequestId) === 0) {
-      return;
-    }
-    try {
-      const response = await api.getConnectionRequestById(Number(connectionRequestId));
-      if (response.data) {
-        dispatch(initializeConnectionRequest(response.data));
-      }
-    } 
-    catch (error) {
-      console.error('Ошибка при загрузке заявки:', error);
-    }
+  const handleProviderServiceAmountChange = (id: number, amount: number) => {
+    dispatch(updateProviderServiceAmount({ id, amount, connectionRequestId: Number(connectionRequestId) }))
+      .then(() => {
+        console.log('Количество успешно обновлено');
+      })
+      .catch(() => {
+        console.error('Ошибка при обновлении количества');
+      });
   };
 
-  const handleProviderServiceAmountChange = async (id: number, amount: number) => {
-    try {
-      await api.updateAmountInDutyRequest(id, Number(connectionRequestId), { amount });
-      dispatch(updateConnectionRequestService({ id, amount }));
-    } 
-    catch (error) {
-      console.error('Ошибка при обновлении количества', error);
-    }
+  const handleDelete = (id: number) => {
+    dispatch(deleteProviderDuty({ id, connectionRequestId: Number(connectionRequestId) }))
+      .then(() => {
+        dispatch(decrementServicesInConnectionRequest());
+        console.log('Услуга успешно удалена из заявки');
+      })
+      .catch(() => {
+        console.error('Ошибка при удалении услуги из заявки');
+      });
   };
-
-  const handleDelete = async (id: number) => {
-    try {
-      await api.deleteProviderDutyFromConnectionRequest(id, Number(connectionRequestId));
-      dispatch(removeFromConnectionRequest(id));
-      dispatch(decrementServicesInConnectionRequest());
-    } 
-    catch (error) {
-      console.error('Ошибка при удалении услуги из заявки:', error);
-    }
-  };
-
-  const handleFormConnectionRequest = async (e: React.FormEvent) => {
+  
+  const handleFormConnectionRequest = (e: React.FormEvent) => {
     e.preventDefault();
     if (services.length === 0) {
       setNotification('Заявка не может быть пустой. Добавьте хотя бы одну услугу.');
       return;
     }
-    try {
-      const response = await api.formConnectionRequest(Number(connectionRequestId));
-      if (response.status === 200) {
+    dispatch(
+      submitConnectionRequest({
+        connectionRequestId: Number(connectionRequestId),
+        consumer,
+        phoneNumber,
+      })
+    )
+      .then(() => {
         dispatch(clearConnectionRequest());
-        dispatch(clearAppState());
         navigate('/provider-duties');
-      }
-    } 
-    catch (error) {
-      console.error('Ошибка при отправке заявки:', error);
-    }
+      })
+      .catch(() => {
+        console.error('Ошибка при отправке заявки');
+      });
   };
 
-  const handleClearConnectionRequest = async () => {
+  const handleClearConnectionRequest = () => {
     if (services.length < 1) {
       navigate('/provider-duties');
       return;
     }
-
-    try {
-      await api.deleteConnectionRequest(Number(connectionRequestId));
-      dispatch(clearConnectionRequest());
-      dispatch(clearAppState());
-      navigate('/provider-duties');
-    } 
-    catch (error) {
-      console.error('Ошибка при удалении заявки:', error);
-    }
+    dispatch(deleteConnectionRequest(Number(connectionRequestId)))
+      .then(() => {
+        dispatch(clearAppState());
+        navigate('/provider-duties');
+      })
+      .catch(() => {
+        console.error('Ошибка при удалении заявки');
+      });
   };
 
   const handleConsumerChange = async (value: string) => {
-    try {
-      await api.updateConnectionRequest(Number(connectionRequestId), { 
-        consumer: value, 
-        phoneNumber: phoneNumber 
-      });
-      dispatch(updateConsumer(value));
-    } 
-    catch (error) {
-      console.error('Ошибка при обновлении данных заказчика:', error);
-      // откат изменений
-      // await loadConnectionRequest();
-    }
+    dispatch(updateConsumer(value));
   };
 
   const handlePhoneNumberChange = async (value: string) => {
-    try {
-      await api.updateConnectionRequest(Number(connectionRequestId), { 
-        consumer: consumer, 
-        phoneNumber: value 
-      });
-      dispatch(updatePhoneNumber(value));
-    } 
-    catch (error) {
-      console.error('Ошибка при обновлении номера телефона:', error);
-      // откат изменений
-      // await loadConnectionRequest();
-    }
+    dispatch(updatePhoneNumber(value));
   };
 
   return {

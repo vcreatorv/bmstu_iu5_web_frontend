@@ -42,7 +42,6 @@ export const useProviderServicePage = () => {
     };
 
     const handleAddToConnectionRequest = async () => {
-        console.log(id + "jdjdjdj");
         if (services.find(service => service.id === providerServiceId)) {
           console.log("Услуга уже добавлена в заявку");
           return;
