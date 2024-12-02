@@ -1,37 +1,172 @@
+// import { useEffect, useState } from 'react';
+// import { useNavigate, useParams } from 'react-router-dom';
+// import { useAppSelector, useAppDispatch } from '../../core/store/hooks';
+// import { 
+//   updateConsumer,
+//   updatePhoneNumber,
+//   clearConnectionRequest, 
+//   loadConnectionRequest,
+//   updateProviderServiceAmount,
+//   deleteProviderDuty,
+//   submitConnectionRequest,
+//   deleteConnectionRequest
+// } from "../../core/store/slices/connectionRequestSlice";
+// import { clearAppState, decrementServicesInConnectionRequest } from '../../core/store/slices/appSlice';
+
+
+// export const useConnectionRequestPage = () => {
+//   const navigate = useNavigate();
+//   const dispatch = useAppDispatch();
+//   const { connectionRequestId } = useParams<{ connectionRequestId: string }>();
+//   const { services, totalPrice, consumer, phoneNumber } = useAppSelector((state) => state.cart);
+//   const [notification, setNotification] = useState<string | null>(null);
+
+
+//   useEffect(() => {
+//     if (connectionRequestId) {
+//       dispatch(loadConnectionRequest(Number(connectionRequestId)));
+//     }
+//   }, [connectionRequestId, dispatch]);
+
+//   const handleProviderServiceAmountChange = (id: number, amount: number) => {
+//     dispatch(updateProviderServiceAmount({ id, amount, connectionRequestId: Number(connectionRequestId) }))
+//       .then(() => {
+//         console.log('Количество успешно обновлено');
+//       })
+//       .catch(() => {
+//         console.error('Ошибка при обновлении количества');
+//       });
+//   };
+
+//   const handleDelete = (id: number) => {
+//     dispatch(deleteProviderDuty({ id, connectionRequestId: Number(connectionRequestId) }))
+//       .then(() => {
+//         dispatch(decrementServicesInConnectionRequest());
+//         console.log('Услуга успешно удалена из заявки');
+//       })
+//       .catch(() => {
+//         console.error('Ошибка при удалении услуги из заявки');
+//       });
+//   };
+  
+//   const handleFormConnectionRequest = (e: React.FormEvent) => {
+//     e.preventDefault();
+//     if (services.length === 0) {
+//       setNotification('Заявка не может быть пустой. Добавьте хотя бы одну услугу.');
+//       return;
+//     }
+//     dispatch(
+//       submitConnectionRequest({
+//         connectionRequestId: Number(connectionRequestId),
+//         consumer,
+//         phoneNumber,
+//       })
+//     )
+//       .then(() => {
+//         dispatch(clearConnectionRequest());
+//         navigate('/provider-duties');
+//       })
+//       .catch(() => {
+//         console.error('Ошибка при отправке заявки');
+//       });
+//   };
+
+//   const handleClearConnectionRequest = () => {
+//     if (services.length < 1) {
+//       navigate('/provider-duties');
+//       return;
+//     }
+//     dispatch(deleteConnectionRequest(Number(connectionRequestId)))
+//       .then(() => {
+//         dispatch(clearAppState());
+//         navigate('/provider-duties');
+//       })
+//       .catch(() => {
+//         console.error('Ошибка при удалении заявки');
+//       });
+//   };
+
+//   const handleConsumerChange = async (value: string) => {
+//     dispatch(updateConsumer(value));
+//   };
+
+//   const handlePhoneNumberChange = async (value: string) => {
+//     dispatch(updatePhoneNumber(value));
+//   };
+
+//   return {
+//     services,
+//     totalPrice,
+//     consumer,
+//     phoneNumber,
+//     notification,
+//     connectionRequestId,
+//     handleProviderServiceAmountChange,
+//     handleDelete,
+//     handleFormConnectionRequest,
+//     handleClearConnectionRequest,
+//     handleConsumerChange,
+//     handlePhoneNumberChange
+//   };
+// };
+
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../core/store/hooks';
 import { 
   updateConsumer,
   updatePhoneNumber,
-  clearConnectionRequest, 
-  loadConnectionRequest,
-  updateProviderServiceAmount,
-  deleteProviderDuty,
+  clearConnectionRequest,
   submitConnectionRequest,
   deleteConnectionRequest
-} from "../../core/store/slices/cartSlice";
-import { clearAppState, decrementServicesInConnectionRequest } from '../../core/store/slices/appSlice';
-
+} from "../../core/store/slices/connectionRequestSlice";
+import { api } from '../../core/api';
 
 export const useConnectionRequestPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { connectionRequestId } = useParams<{ connectionRequestId: string }>();
-  const { services, totalPrice, consumer, phoneNumber } = useAppSelector((state) => state.cart);
+  const { consumer, phoneNumber } = useAppSelector((state) => state.connectionRequest);
   const [notification, setNotification] = useState<string | null>(null);
-
+  const [providerServicesList, setProviderServicesList] = useState<any[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     if (connectionRequestId) {
-      dispatch(loadConnectionRequest(Number(connectionRequestId)));
+      api.getConnectionRequestById(Number(connectionRequestId))
+        .then((response) => {
+          if (response.data) {
+            setProviderServicesList(response.data.providerServiceList || []);
+            calculateTotalPrice(response.data.providerServiceList || []);
+          }
+        })
+        .catch(() => {
+          console.error('Ошибка при загрузке заявки');
+        });
     }
-  }, [connectionRequestId, dispatch]);
+  }, [connectionRequestId]);
+
+  const calculateTotalPrice = (services: any[]) => {
+    const price = services.reduce(
+      (total, service) => total + (service.price || 0) * (service.amount || 1),
+      0
+    );
+    setTotalPrice(price);
+  };
 
   const handleProviderServiceAmountChange = (id: number, amount: number) => {
-    dispatch(updateProviderServiceAmount({ id, amount, connectionRequestId: Number(connectionRequestId) }))
+    api.updateAmountInDutyRequest(id, Number(connectionRequestId), { amount })
       .then(() => {
-        console.log('Количество успешно обновлено');
+        setProviderServicesList((prevServices) =>
+          prevServices.map((service) =>
+            service.id === id ? { ...service, amount } : service
+          )
+        );
+        calculateTotalPrice(
+          providerServicesList.map((service) =>
+            service.id === id ? { ...service, amount } : service
+          )
+        );
       })
       .catch(() => {
         console.error('Ошибка при обновлении количества');
@@ -39,22 +174,26 @@ export const useConnectionRequestPage = () => {
   };
 
   const handleDelete = (id: number) => {
-    dispatch(deleteProviderDuty({ id, connectionRequestId: Number(connectionRequestId) }))
+    api.deleteProviderDutyFromConnectionRequest(id, Number(connectionRequestId))
       .then(() => {
-        dispatch(decrementServicesInConnectionRequest());
+        const updatedServicesList = providerServicesList.filter((service) => service.id !== id);
+        setProviderServicesList(updatedServicesList);
+        calculateTotalPrice(updatedServicesList);
         console.log('Услуга успешно удалена из заявки');
       })
       .catch(() => {
         console.error('Ошибка при удалении услуги из заявки');
       });
   };
-  
+
   const handleFormConnectionRequest = (e: React.FormEvent) => {
     e.preventDefault();
-    if (services.length === 0) {
+    
+    if (providerServicesList.length === 0) {
       setNotification('Заявка не может быть пустой. Добавьте хотя бы одну услугу.');
       return;
     }
+
     dispatch(
       submitConnectionRequest({
         connectionRequestId: Number(connectionRequestId),
@@ -72,13 +211,13 @@ export const useConnectionRequestPage = () => {
   };
 
   const handleClearConnectionRequest = () => {
-    if (services.length < 1) {
+    if (providerServicesList.length < 1) {
       navigate('/provider-duties');
       return;
     }
     dispatch(deleteConnectionRequest(Number(connectionRequestId)))
       .then(() => {
-        dispatch(clearAppState());
+        dispatch(clearConnectionRequest());
         navigate('/provider-duties');
       })
       .catch(() => {
@@ -86,16 +225,16 @@ export const useConnectionRequestPage = () => {
       });
   };
 
-  const handleConsumerChange = async (value: string) => {
+  const handleConsumerChange = (value: string) => {
     dispatch(updateConsumer(value));
   };
 
-  const handlePhoneNumberChange = async (value: string) => {
+  const handlePhoneNumberChange = (value: string) => {
     dispatch(updatePhoneNumber(value));
   };
 
   return {
-    services,
+    providerServicesList,
     totalPrice,
     consumer,
     phoneNumber,
@@ -109,6 +248,7 @@ export const useConnectionRequestPage = () => {
     handlePhoneNumberChange
   };
 };
+
 
 
 

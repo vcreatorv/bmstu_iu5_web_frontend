@@ -15,7 +15,7 @@ export const RequestFilters: FC<IConnectionRequestsFilterProps> = (props: IConne
                                 <Form.Label>Статус</Form.Label>
                                 <Form.Select value={props.selectedStatus} onChange={props.handleStatusChange}>
                                     <option value="">Любой статус</option>
-                                    <option value="FORMED">В работе</option>
+                                    <option value="FORMED">В обработке</option>
                                     <option value="COMPLETED">Завершена</option>
                                     <option value="REJECTED">Отклонена</option>
                                 </Form.Select>

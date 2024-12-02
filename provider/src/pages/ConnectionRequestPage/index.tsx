@@ -2,13 +2,12 @@ import { Navbar } from "../../components/Navbar";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { ProviderServiceCardInConnectionRequest } from "../../components/ProviderServiceCardInConnectionRequest";
 import { useConnectionRequestPage } from "./useConnectionRequestPage";
-import { ProviderDutyInRequestDTO } from "../../core/api/API";
 import { Breadcrumbs } from "../../components/BreadCrumbs";
 
 
 export const ConnectionRequestPage: React.FC = () => {
   const {
-    services,
+    providerServicesList,
     totalPrice,
     consumer,
     phoneNumber,
@@ -73,7 +72,7 @@ export const ConnectionRequestPage: React.FC = () => {
               </Row>
 
               <div className="mb-4">
-                {services.map((service) => (
+                {providerServicesList.map((service) => (
                   <ProviderServiceCardInConnectionRequest
                     key={service.id}
                     providerService={service}

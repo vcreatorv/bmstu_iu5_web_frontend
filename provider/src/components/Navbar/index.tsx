@@ -37,7 +37,6 @@ export const Navbar: FC = () => {
       }
     }
   };
-  console.log(isAuth);
     return (
       <NavbarComp expand="lg" className="navbar logo-container border-bottom border-secondary border-2" sticky="top">
       <Container fluid>

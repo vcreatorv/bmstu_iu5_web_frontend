@@ -1,18 +1,20 @@
 import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import unknownImage from "/images/image_placeholder.jpg"
 import { ProviderDuty } from "../../core/api/API";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
-import { addToConnectionRequest, initializeConnectionRequest } from "../../core/store/slices/cartSlice";
 import { FC } from "react";
 import { api } from "../../core/api";
-import { incrementServicesInConnectionRequest, setConnectionRequestData } from "../../core/store/slices/appSlice";
+import { incrementServicesInConnectionRequest } from "../../core/store/slices/appSlice";
 
 
 export const ProviderServiceCard: FC<ProviderDuty> = (providerService) => {
+    // const dispatch = useAppDispatch();
+    // const {id, services} = useAppSelector((state) => state.cart);
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {id, services} = useAppSelector((state) => state.cart);
-      
+    const { isAuth } = useAppSelector((state) => state.user);
+        
     const renderPrice = () => {
       if (providerService.monthlyPayment) {
         return `от ${providerService.price} ₽/мес`;
@@ -21,49 +23,69 @@ export const ProviderServiceCard: FC<ProviderDuty> = (providerService) => {
         return `от ${providerService.price} ₽ за ${providerService.unit}`;
       }
     };
-    
+
     const handleAddToConnectionRequest = async () => {
-      
-      if (services.find(service => service.id === providerService.id) && id != 0) {
-        console.log("Услуга уже добавлена в заявку");
+      if (!isAuth) {
+        console.log("Пользователь не авторизован. Пожалуйста, выполните вход.");
+        alert("Вы должны авторизоваться, чтобы добавить услугу в заявку.");
+        navigate("/login");
         return;
       }
-      
+  
       try {
-        const response = await api.addProviderDutyToRequest(providerService.id!);
-        
+        const response = await api.addProviderDutyToRequest(Number(providerService.id));
         if (response.data) {
-          if (id === 0) {
-            dispatch(initializeConnectionRequest({
-              id: response.data.id,
-              providerServiceList: [],
-              consumer: '',
-              phoneNumber: ''
-            }));
-            dispatch(setConnectionRequestData({connectionRequestId: response.data.id!}))
-          }
-  
-          // dispatch(addToConnectionRequest(providerService));
-          dispatch(addToConnectionRequest(
-            {
-                id: providerService?.id,
-                title: providerService?.title,
-                price: providerService?.price,
-                monthlyPayment: providerService?.monthlyPayment,
-                unit: providerService?.unit,
-                amountDescription: providerService?.amountDescription,
-                imgUrl: providerService!.imgUrl,
-                amount: 1,
-            }
-          ));
-  
+          alert("Услуга успешно добавлена в заявку");
           dispatch(incrementServicesInConnectionRequest());
         }
       } 
       catch (error) {
-        console.error('Ошибка добавления услуги в заявку:', error);
+        console.error("Ошибка добавления услуги в заявку:", error);
       }
     };
+    
+    // const handleAddToConnectionRequest = async () => {
+      
+    //   if (services.find(service => service.id === providerService.id) && id != 0) {
+    //     console.log("Услуга уже добавлена в заявку");
+    //     return;
+    //   }
+      
+    //   try {
+    //     const response = await api.addProviderDutyToRequest(providerService.id!);
+        
+    //     if (response.data) {
+    //       if (id === 0) {
+    //         dispatch(initializeConnectionRequest({
+    //           id: response.data.id,
+    //           providerServiceList: [],
+    //           consumer: '',
+    //           phoneNumber: ''
+    //         }));
+    //         dispatch(setConnectionRequestData({connectionRequestId: response.data.id!}))
+    //       }
+  
+    //       // dispatch(addToConnectionRequest(providerService));
+    //       dispatch(addToConnectionRequest(
+    //         {
+    //             id: providerService?.id,
+    //             title: providerService?.title,
+    //             price: providerService?.price,
+    //             monthlyPayment: providerService?.monthlyPayment,
+    //             unit: providerService?.unit,
+    //             amountDescription: providerService?.amountDescription,
+    //             imgUrl: providerService!.imgUrl,
+    //             amount: 1,
+    //         }
+    //       ));
+  
+    //       dispatch(incrementServicesInConnectionRequest());
+    //     }
+    //   } 
+    //   catch (error) {
+    //     console.error('Ошибка добавления услуги в заявку:', error);
+    //   }
+    // };
         
     return (
       <Card className="w-100 rounded-4 shadow-sm" style={{ overflow: 'hidden' }}>
