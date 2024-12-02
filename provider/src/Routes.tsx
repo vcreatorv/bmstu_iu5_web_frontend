@@ -36,7 +36,7 @@ export const AppRoutes = () => {
             element: <UserAccountPage />,
         },
         {
-            path: "/connection-request/:connectionRequestId",
+            path: "/connection-requests/:connectionRequestId",
             element: <ConnectionRequestPage />,
         },
         {

@@ -8,4 +8,7 @@ export interface IConnectionRequestsTableRow {
     creationDate: string;
     formationDate: string;
     completionDate: string;
+    totalPrice: string;
+    consumer: string;
+    phoneNumber: string;
 }

@@ -121,6 +121,28 @@ import {
   deleteConnectionRequest
 } from "../../core/store/slices/connectionRequestSlice";
 import { api } from '../../core/api';
+import { ProviderDutyInRequestDTO } from '../../core/api/API';
+
+
+
+export function calculateTotalPriceAndFormat(providerServiceList?: ProviderDutyInRequestDTO[]): { totalPrice: number; priceFormat: string } {
+  console.log(providerServiceList);
+  if (!providerServiceList || providerServiceList.length === 0) {
+      return { totalPrice: 0, priceFormat: '₽' };
+  }
+
+  const totalPrice = providerServiceList.reduce((total, service) => {
+      return total + (service.price || 0) * (service.amount || 1);
+  }, 0);
+
+  const allMonthlyPayments = providerServiceList.every(service => service.monthlyPayment);
+
+  return {
+      totalPrice,
+      priceFormat: allMonthlyPayments ? "₽/мес" : "₽"
+  };
+}
+
 
 export const useConnectionRequestPage = () => {
   const navigate = useNavigate();
@@ -130,6 +152,7 @@ export const useConnectionRequestPage = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [providerServicesList, setProviderServicesList] = useState<any[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [priceFormat, setPriceFormat] = useState<string>("₽");
 
   useEffect(() => {
     if (connectionRequestId) {
@@ -137,7 +160,9 @@ export const useConnectionRequestPage = () => {
         .then((response) => {
           if (response.data) {
             setProviderServicesList(response.data.providerServiceList || []);
-            calculateTotalPrice(response.data.providerServiceList || []);
+            const { totalPrice: calculatedTotalPrice, priceFormat: calculatedPriceFormat } = calculateTotalPriceAndFormat(response.data.providerServiceList || []);
+            setTotalPrice(calculatedTotalPrice);
+            setPriceFormat(calculatedPriceFormat);
           }
         })
         .catch(() => {
@@ -146,13 +171,13 @@ export const useConnectionRequestPage = () => {
     }
   }, [connectionRequestId]);
 
-  const calculateTotalPrice = (services: any[]) => {
-    const price = services.reduce(
-      (total, service) => total + (service.price || 0) * (service.amount || 1),
-      0
-    );
-    setTotalPrice(price);
-  };
+  // const calculateTotalPrice = (services: any[]) => {
+  //   const price = services.reduce(
+  //     (total, service) => total + (service.price || 0) * (service.amount || 1),
+  //     0
+  //   );
+  //   setTotalPrice(price);
+  // };
 
   const handleProviderServiceAmountChange = (id: number, amount: number) => {
     api.updateAmountInDutyRequest(id, Number(connectionRequestId), { amount })
@@ -162,11 +187,13 @@ export const useConnectionRequestPage = () => {
             service.id === id ? { ...service, amount } : service
           )
         );
-        calculateTotalPrice(
+        const { totalPrice: calculatedTotalPrice, priceFormat: calculatedPriceFormat } = calculateTotalPriceAndFormat(
           providerServicesList.map((service) =>
             service.id === id ? { ...service, amount } : service
           )
         );
+        setTotalPrice(calculatedTotalPrice);
+        setPriceFormat(calculatedPriceFormat);
       })
       .catch(() => {
         console.error('Ошибка при обновлении количества');
@@ -178,7 +205,9 @@ export const useConnectionRequestPage = () => {
       .then(() => {
         const updatedServicesList = providerServicesList.filter((service) => service.id !== id);
         setProviderServicesList(updatedServicesList);
-        calculateTotalPrice(updatedServicesList);
+        const { totalPrice: calculatedTotalPrice, priceFormat: calculatedPriceFormat } = calculateTotalPriceAndFormat(updatedServicesList);
+        setTotalPrice(calculatedTotalPrice);
+        setPriceFormat(calculatedPriceFormat);
         console.log('Услуга успешно удалена из заявки');
       })
       .catch(() => {
@@ -236,6 +265,7 @@ export const useConnectionRequestPage = () => {
   return {
     providerServicesList,
     totalPrice,
+    priceFormat,
     consumer,
     phoneNumber,
     notification,

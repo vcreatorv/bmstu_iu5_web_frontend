@@ -146,7 +146,7 @@ export const useProviderServicePage = () => {
       if (response.data) {
         console.log("Услуга успешно добавлена в заявку");
         dispatch(incrementServicesInConnectionRequest());
-        navigate(`/connection-request/${response.data.id}`);
+        navigate(`/connection-requests/${response.data.id}`);
       }
     } 
     catch (error) {

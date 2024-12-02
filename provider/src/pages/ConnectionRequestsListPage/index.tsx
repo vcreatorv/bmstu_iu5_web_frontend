@@ -10,7 +10,7 @@ export const ConnectionRequestsListPage = () => {
     return (
         <>
             <Navbar/>
-            <Container>
+            <Container style={{ maxWidth: "1400px"}}>
             
             <h1 className="m-3">Заявки</h1>
             <RequestFilters {...filterProps}></RequestFilters>

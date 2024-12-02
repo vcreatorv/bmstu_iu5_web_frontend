@@ -6,7 +6,8 @@ import { ChangeEvent } from "../../App.typing";
 import { api } from "../../core/api";
 import { connectionRequestsList as CONNECTION_REQUESTS_LIST_MOCK } from "../../core/mock/connectionRequestsList";
 import { IConnectionRequestsFilterProps } from "../../components/ConnectionRequestsListFilters/typing";
-import { ConnectionRequestDTO } from "../../core/api/API";
+import { ConnectionRequestDTO, ProviderDutyInRequestDTO } from "../../core/api/API";
+import { calculateTotalPriceAndFormat } from "../ConnectionRequestPage/useConnectionRequestPage";
 
 export const useConnectionRequestsListPage = () => {
     const [tableProps, setTableProps] = useState<IConnectionRequestsTableProps>({rows: []});
@@ -34,6 +35,7 @@ export const useConnectionRequestsListPage = () => {
                 endDate: mapStringToOptQueryParam(filterConnectionRequestEndDate),
             })
             .then((response) => {
+                console.log(response.data)
                 setTableProps(mapBackendResultToTableData(response.data))
             })
             .catch(() => {
@@ -102,14 +104,21 @@ function convertDatetimeToDDMMYYYY(dateString: string | null | undefined): strin
     return `${day}.${month}.${year}`;
 }
 
+
+
 export function mapBackendResultToTableData(requests: ConnectionRequestDTO[]): IConnectionRequestsTableProps {
     const rows: IConnectionRequestsTableRow[] = requests.map((request) => {
+        console.log(request.providerServiceList);
+        const { totalPrice: calculatedTotalPrice, priceFormat: calculatedPriceFormat } = calculateTotalPriceAndFormat(request.providerServiceList);
         return {
             number: request.id || 0,
             status: mapStatusToTable(request.status),
             creationDate: convertDatetimeToDDMMYYYY(request.creationDatetime),
             formationDate: convertDatetimeToDDMMYYYY(request.formationDatetime),
             completionDate: convertDatetimeToDDMMYYYY(request.completionDatetime),
+            totalPrice: `${calculatedTotalPrice} ${calculatedPriceFormat}`,
+            consumer: request.consumer!,
+            phoneNumber: request.phoneNumber!,
         };
     });
 

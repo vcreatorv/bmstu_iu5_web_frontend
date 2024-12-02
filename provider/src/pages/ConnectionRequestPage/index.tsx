@@ -9,6 +9,7 @@ export const ConnectionRequestPage: React.FC = () => {
   const {
     providerServicesList,
     totalPrice,
+    priceFormat,
     consumer,
     phoneNumber,
     notification,
@@ -88,7 +89,7 @@ export const ConnectionRequestPage: React.FC = () => {
                         <h5 className="mb-0">Итого:</h5>
                       </Col>
                       <Col className="text-end">
-                        <p className="mb-0 fw-bold fs-5">{totalPrice} ₽</p>
+                        <p className="mb-0 fw-bold fs-5">{totalPrice} {priceFormat}</p>
                       </Col>
                     </Row>
                   </Card.Body>

@@ -15,7 +15,7 @@ export const CartIcon: FC<ICartProps> = (cartData: ICartProps) => {
       onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
     >
       <Link 
-        to={`/connection-request/${cartData.connectionRequestId}/`} 
+        to={`/connection-requests/${cartData.connectionRequestId}/`} 
         // className={cartData.connectionRequestId != 0 
         //   ? "d-flex flex-column align-items-center text-dark text-decoration-none fw-medium" 
         //   : "d-flex flex-column align-items-center text-dark text-decoration-none fw-medium disable" }
