@@ -81,7 +81,7 @@ export const ProviderServicePage: FC = () => {
                 variant="warning" 
                 className="w-100 w-sm-50 btn-lg"
                 style={{ 
-                  transition: "transform 550ms", 
+                  transition: "transform 530ms", 
                   backgroundColor: "#fed305", 
                   borderColor: "#fed305" 
                 }}

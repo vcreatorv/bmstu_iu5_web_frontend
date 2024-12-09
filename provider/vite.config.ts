@@ -41,7 +41,7 @@ export default defineConfig({
           }, 
         })
     ],
-    base: "/internet-service-provider-frontend/",
+    base: "/internet-service-provider-frontend",
     server: {
         port: 3000,
         proxy: {

@@ -5,9 +5,9 @@
   "homepage": "https://vcreatorv.github.io/internet-service-provider-frontend/",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist",
     "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.png"
