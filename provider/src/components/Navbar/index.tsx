@@ -68,7 +68,7 @@ export const Navbar: FC = () => {
                 Выйти
               </Link>
               
-              <Link to="/connection-requests-list" className="requests-link me-2 pe-2">
+              <Link to="/connection-requests-list" className="requests-link me-2">
                 История заказов
               </Link> 
         

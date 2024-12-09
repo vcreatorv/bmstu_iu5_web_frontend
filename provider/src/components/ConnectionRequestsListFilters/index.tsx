@@ -3,7 +3,6 @@ import { IConnectionRequestsFilterProps } from "./typing";
 import { FC } from "react";
 
 
-
 export const RequestFilters: FC<IConnectionRequestsFilterProps> = (props: IConnectionRequestsFilterProps) => {
     return (
         <Card className="m-3">
