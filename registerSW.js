@@ -1,1 +1,1 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/internet-service-provider/sw.js', { scope: '/internet-service-provider/' })})}
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/bmstu_iu5_web_frontend/sw.js', { scope: '/bmstu_iu5_web_frontend/' })})}
