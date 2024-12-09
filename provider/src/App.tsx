@@ -6,7 +6,7 @@ import { store } from './core/store/store';
 
 function App() {
   return (
-      <BrowserRouter basename='/bmstu_iu5_web_frontend'>
+      <BrowserRouter basename='/internet-service-provider-frontend'>
         <Provider store={store}>
           <AppRoutes/>
         </Provider>
