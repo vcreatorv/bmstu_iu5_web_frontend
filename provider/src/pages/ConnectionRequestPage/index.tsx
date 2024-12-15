@@ -30,7 +30,7 @@ export const ConnectionRequestPage: React.FC = () => {
           <Breadcrumbs
               middleItems={[
                   {
-                      name: "Каталог",
+                      name: "Интернет услуги провайдера",
                       link: "/provider-duties"
                   }
               ]}

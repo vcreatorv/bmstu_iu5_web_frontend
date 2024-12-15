@@ -26,7 +26,7 @@ export const ProviderCatalogPage: FC = () => {
       <Navbar/>
       <Container className="pb-4 d-flex flex-column mx-auto" style={{maxWidth:'1200px'}}>
         <Container className="d-flex flex-row m-0 mt-5 mb-5 p-0" style={{maxWidth:'1200px'}}>
-          <Breadcrumbs endItem="Каталог"/>
+          <Breadcrumbs endItem="Интернет услуги провайдера"/>
           <div className='ms-auto'>
             <CartIcon connectionRequestId={connectionRequestId ? connectionRequestId : 0} itemsInCart={itemsInCart} />
           </div>

@@ -497,7 +497,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * REST API провайдера для составления заявок на подключение и просмотра услуг.
  *
  *  Полезные ссылки:
- * <ul><li>https://github.com/vcreatorv/bmstu_iu5_web</li></ul>
+ * <ul><li>https://github.com/vcreatorv/internet-service-provider-backend</li></ul>
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   constructor(config: ApiConfig<SecurityDataType> = {}) {

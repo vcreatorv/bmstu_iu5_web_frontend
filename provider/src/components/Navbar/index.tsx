@@ -53,7 +53,7 @@ export const Navbar: FC = () => {
         <NavbarComp.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Link to="/provider-duties" className="text-dark catalog-link">
-              Каталог услуг провайдера
+              Интернет услуги провайдера
             </Link>
           </Nav>
           

@@ -24,7 +24,7 @@ export const ProviderServicePage: FC = () => {
         <Breadcrumbs
           middleItems={[
             {
-              name: "Каталог",
+              name: "Интернет услуги провайдера",
               link: "/provider-duties"
             }
           ]}
